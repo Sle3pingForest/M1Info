@@ -1,0 +1,11 @@
+package model;
+
+public class Mul extends Operation {
+	
+	private String mul = "*";
+	
+	public Mul(int a, int b) {
+		super(a, b);
+	}
+
+}

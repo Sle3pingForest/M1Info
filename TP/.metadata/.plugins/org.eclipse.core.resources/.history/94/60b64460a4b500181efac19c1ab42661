@@ -1,0 +1,9 @@
+package model;
+
+public class Addition implements Operation {
+
+	public int resultat(int a, int b) {
+		return a + b;
+	}
+
+}

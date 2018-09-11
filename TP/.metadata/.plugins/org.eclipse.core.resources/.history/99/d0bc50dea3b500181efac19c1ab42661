@@ -1,0 +1,22 @@
+package model;
+
+public class Operation {
+	protected int a;
+	protected int b;
+	protected int res;
+	
+	public Operation(){
+		this.a = 0;
+		this.b = 0;
+	}
+	
+	public Operation(int a,int b){
+		this.a = a;
+		this. b = b;
+	}
+	
+	public int resultat(){
+		return res;
+		
+	}
+}

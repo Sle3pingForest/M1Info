@@ -1,0 +1,29 @@
+package model;
+
+
+import model.Operation;
+import view.*;
+
+public class Calculator {
+	
+	
+	public Calculator(){
+		
+	}
+	
+	
+	public void calculer(Operation ope){
+		
+	}
+	
+	public void majVue(){
+		for(Vues v : vues){
+			v.maj();
+		}
+	}
+	
+	public void ajouterVue(Vues v){
+		vues.add(v);
+	}
+
+}

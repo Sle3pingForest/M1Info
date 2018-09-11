@@ -1,0 +1,15 @@
+package model;
+
+public class Addition implements Operation {
+
+	public Addition(int a, String ope, int b) {
+		if(ope == "+"){
+			this.add ="+";
+		}
+	}
+	
+	public int resultat(int a, int b) {
+		return a + b;
+	}
+
+}

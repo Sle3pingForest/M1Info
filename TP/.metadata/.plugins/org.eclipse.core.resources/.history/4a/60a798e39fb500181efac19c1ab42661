@@ -1,0 +1,18 @@
+package model;
+
+
+import model.Operation;
+
+public class Calculator {
+	
+	
+	
+	public Calculator(){
+		
+	}
+	
+	
+	public int calculer(Operation ope){
+	}
+
+}

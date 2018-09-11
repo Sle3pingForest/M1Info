@@ -1,0 +1,32 @@
+package model;
+
+
+import java.util.ArrayList;
+
+import model.Operation;
+import view.*;
+
+public class Calculator {
+
+	protected ArrayList<View> views;
+	private Operation op;
+	
+	public Calculator(){
+		this.op = new Operation();
+	}
+	
+	public int calculer(Operation ope){
+		return ope.res()
+	}
+	
+	public void majVue(){
+		for(View v : views){
+			//v.maj();
+		}
+	}
+	
+	public void ajouterVue(View v){
+		//vues.add(v);
+	}
+
+}

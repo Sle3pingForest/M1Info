@@ -1,0 +1,17 @@
+package model;
+
+public class Div extends Operation {
+	private String div;
+	
+	public Div(int a, String ope, int b) {
+		super(a, b);
+		if(ope == "*"){
+			this.div ="*";
+		}
+	}
+
+	public int resultat(){
+		return a * b;
+	}
+
+}
