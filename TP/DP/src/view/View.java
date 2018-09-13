@@ -103,15 +103,30 @@ public class View implements Observer{
     class LocalListener implements ActionListener {
 
         private int digit;
-
-        public LocalListener(int digit) {
-            this.digit = digit;
+        private StringBuilder sb;
+        private Calculator cal;
+        
+        public LocalListener() {
+            this.sb = new StringBuilder();
         }
 
- 
+        public LocalListener(int digit, Calculator cal) {
+            this.digit = digit;
+            this.cal = cal;
+            this.sb = new StringBuilder("");
+        }
+        
+
         public void actionPerformed(ActionEvent e) {
-        	textField.setText(this.digit+"");
-            System.out.println("TYPED : "+ digit);
+        	this.sb.append(digit+"");
+        	if(this.digit != MINUS || this.digit != PLUS) {
+            	this.cal.setOpG(Integer.valueOf(this.sb.toString()));
+        	}
+            System.out.println("TYPED : "+ digit + ": " +this.sb.toString());
+        }
+        
+        public String getNumber() {
+        	return this.sb.toString();
         }
     }
 
