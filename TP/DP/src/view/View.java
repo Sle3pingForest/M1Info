@@ -16,7 +16,9 @@ import java.util.Observer;
 
 import javax.swing.*;
 
+import model.Addition;
 import model.Calculator;
+import model.Sub;
 
 public class View implements Observer{
 
@@ -36,11 +38,11 @@ public class View implements Observer{
     public void view(Calculator cal) {
         // ...
     	this.cal = cal;
-        buildFrame();
+        buildFrame(this.cal);
         this.cal.addObserver(this);
     }
 
-    public void buildFrame() {
+    public void buildFrame(Calculator cal) {
 
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
@@ -54,7 +56,7 @@ public class View implements Observer{
         // initialize button 0-9 
         for (int i = 0; i < numberButtons.length; i++) {
             numberButtons[i] = new JButton(" " + i + " ");
-            numberButtons[i].addActionListener(new View.LocalListener(i));
+            numberButtons[i].addActionListener(new View.LocalListener(i, cal));
         }
 
         // default layout = BorderLayout.CENTER 
@@ -69,7 +71,7 @@ public class View implements Observer{
         panels[1].add(numberButtons[8]);
         panels[1].add(numberButtons[9]);
         panels[1].add(addButton);
-        addButton.addActionListener(new View.LocalListener(PLUS));
+        addButton.addActionListener(new View.LocalListener(PLUS, cal));
 
         // layout = FlowLayout.LEFT 
         panels[2].setLayout(new FlowLayout(FlowLayout.LEFT));
@@ -77,7 +79,7 @@ public class View implements Observer{
         panels[2].add(numberButtons[5]);
         panels[2].add(numberButtons[6]);
         panels[2].add(subtractButton);
-        subtractButton.addActionListener(new View.LocalListener(MINUS));
+        subtractButton.addActionListener(new View.LocalListener(MINUS, cal));
 
         // layout = FlowLayout.LEFT 
         panels[3].setLayout(new FlowLayout(FlowLayout.LEFT));
@@ -85,7 +87,7 @@ public class View implements Observer{
         panels[3].add(numberButtons[2]);
         panels[3].add(numberButtons[3]);
         panels[3].add(equateButton);
-        equateButton.addActionListener(new View.LocalListener(EQUAL));
+        equateButton.addActionListener(new View.LocalListener(EQUAL, cal));
 
         // layout = FlowLayout.LEFT 
         panels[4].setLayout(new FlowLayout(FlowLayout.LEFT));
@@ -95,7 +97,6 @@ public class View implements Observer{
         for (JPanel jPanel : panels) {
             contentPane.add(jPanel);
         }
-
         frame.pack();
         frame.setVisible(true);
     }
@@ -103,35 +104,75 @@ public class View implements Observer{
     class LocalListener implements ActionListener {
 
         private int digit;
-        private StringBuilder sb;
         private Calculator cal;
+        private Addition add;
+        private Sub sub;
         
-        public LocalListener() {
-            this.sb = new StringBuilder();
-        }
+
 
         public LocalListener(int digit, Calculator cal) {
             this.digit = digit;
             this.cal = cal;
-            this.sb = new StringBuilder("");
         }
         
 
         public void actionPerformed(ActionEvent e) {
-        	this.sb.append(digit+"");
-        	if(this.digit != MINUS || this.digit != PLUS) {
-            	this.cal.setOpG(Integer.valueOf(this.sb.toString()));
+
+            if(this.digit == MINUS || this.digit == PLUS){
+            	Calculator.DROITE = true;
+            	if(this.digit == PLUS){
+            		this.add = new Addition();
+                	cal.setOperation(this.add);
+            	}
+            	else{
+            		this.sub = new Sub();
+                	cal.setOperation(this.sub);
+            	}
+            }
+            else{
+                if(this.digit == EQUAL){
+                	Calculator.RESULTAT = true;
+                	Calculator.DROITE = false;
+                	this.cal.setResultat();
+                	Calculator.RESULTAT = false;
+                	
+                }
+                else{
+                	if(!Calculator.DROITE){
+                		int number = this.cal.getOpG()*10 + digit;
+                		if(!Calculator.RESULTAT){
+                			number = this.cal.getOpG()*10 + digit;
+                		}
+                		this.cal.setOpG(number);
+                	}
+                	if(Calculator.DROITE){
+	        			int number = this.cal.getOpD()*10 + digit;
+	        			this.cal.setOpD(number);
+	        		}
+                }
         	}
-            System.out.println("TYPED : "+ digit + ": " +this.sb.toString());
+
+        	System.out.println("Gauche : " + this.cal.getOpG());
+
+        	System.out.println("Droite: " + this.cal.getOpD());
+            System.out.println("TYPED : "+ digit);
         }
         
-        public String getNumber() {
-        	return this.sb.toString();
-        }
     }
 
 	public void update(Observable o, Object arg) {
-		// TODO Auto-generated method stub
+		if(Calculator.RESULTAT){
+			this.textField.setText(this.cal.getResultat()+"");		
+		}
+		else{
+			if(!Calculator.DROITE){
+				this.textField.setText(this.cal.getOpG()+"");
+			}
+			if(Calculator.DROITE){
+				this.textField.setText(this.cal.getOpD()+"");
+			}
+		}
 		
 	}
+
 }
