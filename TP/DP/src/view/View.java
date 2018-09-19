@@ -128,18 +128,18 @@ public class View implements Observer{
             		this.sub = new Sub();
                 	cal.setOperation(this.sub);
             	}
+            	
             }
             else{
                 if(this.digit == EQUAL){
                 	Calculator.RESULTAT = true;
-                	Calculator.DROITE = false;
                 	this.cal.setResultat();
                 	Calculator.RESULTAT = false;
                 	
                 }
                 else{
                 	if(!Calculator.DROITE){
-                		int number = this.cal.getOpG()*10 + digit;
+                		int number = this.cal.getResultat();
                 		if(!Calculator.RESULTAT){
                 			number = this.cal.getOpG()*10 + digit;
                 		}
@@ -152,10 +152,10 @@ public class View implements Observer{
                 }
         	}
 
-        	System.out.println("Gauche : " + this.cal.getOpG());
+        	//System.out.println("Gauche : " + this.cal.getOpG());
 
-        	System.out.println("Droite: " + this.cal.getOpD());
-            System.out.println("TYPED : "+ digit);
+        	//System.out.println("Droite: " + this.cal.getOpD());
+            //System.out.println("TYPED : "+ digit);
         }
         
     }
@@ -170,6 +170,12 @@ public class View implements Observer{
 			}
 			if(Calculator.DROITE){
 				this.textField.setText(this.cal.getOpD()+"");
+				/*if(Calculator.RESULTAT_INTERMEDIAIRE){
+					this.textField.setText(this.cal.getResultat()+"");
+				}
+				else{
+					this.textField.setText(this.cal.getOpD()+"");
+				}*/
 			}
 		}
 		

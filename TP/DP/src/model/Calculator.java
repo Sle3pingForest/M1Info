@@ -9,9 +9,8 @@ import view.*;
 
 public class Calculator extends Observable {
 
-	protected ArrayList<View> views;
 	private Operation op;
-	private int opeG = 0, opeD = 0;
+	private int opeG , opeD ;
 	public static boolean DROITE = false;
 	public static boolean RESULTAT = false;
 	protected int resultat ;
@@ -35,9 +34,6 @@ public class Calculator extends Observable {
 		this.notifyObservers();
 	}
 	
-	public int getResultat(){
-		return this.resultat;
-	}
 	
 	public void setOperation(Operation op){
 		this.op = op;
@@ -64,6 +60,10 @@ public class Calculator extends Observable {
 		this.opeD = b;
 		this.setChanged();
 		this.notifyObservers();
+	}
+	
+	public int getResultat(){
+		return this.resultat;
 	}
 
 	public static void main(String[] args) {
