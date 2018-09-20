@@ -6,6 +6,9 @@ import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
+import java.util.TreeSet;
+
+import comparable.AgeComparable;
 
 import personne.Enseignant;
 import personne.Etudiant;
@@ -18,38 +21,33 @@ public class Promo {
 	
 	private String nom;
 	private String annee;
-	private Set<Personne> personnes;
+	private Set<Etudiant> personnes;
 	private Set<Matiere> matieres;
 	
 	
-	public Promo( String nom, String annee, Set<Personne> personnes,Set<Matiere> matieres ){
+	public Promo( String nom, String annee, Set<Etudiant> personnes,Set<Matiere> matieres ){
 		this.nom = nom;
 		this.annee = annee;
 		this.personnes = personnes;
 		this.matieres = matieres;
 	}
 	
-	public String Affiche(){
+	public String AfficheEtudiant(){
 		StringBuilder sEtu = new StringBuilder("\nLes Etudiants : \n");
 
-		StringBuilder sEns = new StringBuilder("\nLes Intervenants : \n");
-		for(Personne p : personnes){
+		for(Etudiant p : personnes){
 			if(p.estEtu()){
 				sEtu.append(p.toString());
 				sEtu.append("\n");
 			}
-			else{
-				sEns.append(p.toString());
-				sEns.append("\n");
-			}
 		}	
-		return sEtu.toString() + sEns.toString();
+		return sEtu.toString();
 	}
 	
 	public String toString(){
 		StringBuilder s = new StringBuilder("Promo ");
 		s.append(this.nom + " " + this.annee);
-		s.append(Affiche());
+		s.append(AfficheEtudiant());
 		return s.toString();
 	}
 	
@@ -62,16 +60,16 @@ public class Promo {
 		matieres.add(info);
 		matieres.add(math);
 		
-		Personne e1 = new Etudiant("Ly", "nam", 1994);
-		Personne e2 = new Etudiant("Giang", "Andre", 1994);
-		Personne e3 = new Etudiant("Losson", "Brice", 1994);
+		Etudiant e1 =  Etudiant.getInstance("Ly", "nam", 1994);
+		Etudiant e2 = Etudiant.getInstance("Ly", "bruce", 1994);
+		Etudiant e3 = Etudiant.getInstance("Losson", "Brice", 1984);
 		Personne e4 = new Enseignant("Universitaire","Lee", "Bruce", 250, info);
 		
-		Set<Personne> personnes = new HashSet<Personne>();
+		Set<Etudiant> personnes = new TreeSet<Etudiant>(new AgeComparable());
 		personnes.add(e1);
 		personnes.add(e2);
 		personnes.add(e3);
-		personnes.add(e4);
+		//personnes.add(e4);
 		
 		Promo promo = new Promo("Master 1", "2018-2019", personnes, matieres);
 		System.out.println(promo.toString());

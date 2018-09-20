@@ -10,11 +10,23 @@ public class Etudiant extends Personne{
 	protected static int NOETU;
 	protected int noEt;
 	
-	public Etudiant(String nom, String prenom, int annee){
+	private Etudiant(String nom, String prenom, int annee){
 		super(nom, prenom);
 		int year = Calendar.getInstance().get(Calendar.YEAR);
 		this.age = year - annee;
 		noEt = NOETU++;
+	}
+	
+	public static Etudiant getInstance(String nom, String prenom, int annee){
+		return new Etudiant(nom, prenom, annee);
+	}
+	
+	public int getAge(){
+		return this.age;
+	}
+	
+	public String getNom(){
+		return this.nom;
 	}
 	
 	public String toString(){
@@ -23,6 +35,7 @@ public class Etudiant extends Personne{
 		s.append("Etudiant " + this.prenom + " " + this.nom + "(noEt=" + noEt+ ") " + this.age + " ans");
 		return s.toString();
 	}
+	
 	
 
 	public static void main(String[] args) {
