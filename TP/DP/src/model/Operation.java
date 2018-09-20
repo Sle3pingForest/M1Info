@@ -2,5 +2,7 @@ package model;
 
 public interface Operation {
 	
-	public int resultat(int a , int b);
+	public int resultat(OperantGauche a , OperantDroite b);
+	
+	public String getOperation();
 }
