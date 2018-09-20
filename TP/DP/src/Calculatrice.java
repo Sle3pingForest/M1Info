@@ -8,7 +8,7 @@ import model.Calculator;
 public class Calculatrice  {
 	
 	public Calculatrice(){
-		Calculator cal = new Calculator(0,0);
+		Calculator cal = new Calculator();
 		View v = new View();
 		v.view(cal);
 		

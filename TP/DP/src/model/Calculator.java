@@ -10,26 +10,39 @@ import view.*;
 public class Calculator extends Observable {
 
 	private Operation op;
-	private int opeG , opeD ;
-	public static boolean DROITE = false;
-	public static boolean RESULTAT = false;
+	private OperantGauche og;
+	private OperantDroite od;
 	protected int resultat ;
+	protected int resultatInter ;
+	public static boolean END_OPERATION = false;
+	public static boolean DROITE = false;
 	
-	public Calculator(int d, int g){
-		this.opeD = d;
-		this.opeG = g;
-		this.setChanged();
-		this.notifyObservers();
+	public Calculator(){
+		this.og = new OperantGauche(0);
+		this.od = new OperantDroite(0);
+		this.resultat = 0;
+		this.resultatInter = 0;
 	}
 	
 	private int calculer(){
-		return this.op.resultat(this.opeG, this.opeD);
+		System.out.println(this.og.getValeur() + this.op.getOperation() + this.od.getValeur());
+		return this.op.resultat(this.og, this.od);
 	}
 	
-	public void setResultat(){
-		this.resultat = calculer();
-		this.opeG = this.resultat;
-		this.opeD = 0;
+	public void setResultat(int digit){
+		if(digit != View.EQUAL) {
+			resultatInter = calculer();
+			setOpG(resultatInter);
+			setOpD(0);
+			DROITE = true;
+		}
+		else {
+			this.resultat = calculer();
+			this.setOpD(0);
+			this.setOpG(0);
+			END_OPERATION = true;
+			DROITE = false;
+		}
 		this.setChanged();
 		this.notifyObservers();
 	}
@@ -42,22 +55,22 @@ public class Calculator extends Observable {
 	}
 
 	
-	public int getOpD() {
-		return this.opeD;
+	public OperantDroite getOpD() {
+		return this.od;
 	}
 	
-	public int getOpG() {
-		return this.opeG;
+	public OperantGauche getOpG() {
+		return this.og;
 	}
 	
 	public void setOpG(int a) {
-		this.opeG = a;
+		this.og = new OperantGauche(a);
 		this.setChanged();
 		this.notifyObservers();
 	}
 	
 	public void setOpD(int b) {
-		this.opeD = b;
+		this.od = new OperantDroite(b);
 		this.setChanged();
 		this.notifyObservers();
 	}
@@ -65,12 +78,13 @@ public class Calculator extends Observable {
 	public int getResultat(){
 		return this.resultat;
 	}
-
-	public static void main(String[] args) {
-		Calculator cal =  new Calculator(0,15);
-		Addition add = new Addition();
-		cal.setOperation(add);
-		System.out.println(cal.calculer());
+	
+	public int getResultatInter() {
+		return this.resultatInter;
+	}
+	
+	public String operation() {
+		return this.op.getOperation();
 	}
 
 }
