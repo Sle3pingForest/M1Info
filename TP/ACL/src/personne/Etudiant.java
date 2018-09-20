@@ -20,7 +20,7 @@ public class Etudiant extends Personne{
 	public String toString(){
 
 		StringBuilder s = new StringBuilder("");
-		s.append("Etudiant " + this.prenom + " " + this.nom + "(noEt=" + noEt+ ") " + this.age + " ans");
+		s.append("Etudiant " + this.prenom + " " + this.nom + " (noEt=" + noEt+ ") " + this.age + " ans");
 		return s.toString();
 	}
 	
