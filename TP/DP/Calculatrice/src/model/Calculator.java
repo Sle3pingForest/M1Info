@@ -5,86 +5,70 @@ import java.util.ArrayList;
 import java.util.Observable;
 
 import model.Operation;
-import view.*;
+import operant.Operant;
+import operateur.Operateur;
 
 public class Calculator extends Observable {
 
-	private Operation op;
-	private OperantGauche og;
-	private OperantDroite od;
-	protected int resultat ;
-	protected int resultatInter ;
-	public static boolean END_OPERATION = false;
+	private ArrayList<Operation> operations;
+	private Operation operation;
 	public static boolean DROITE = false;
+	public static boolean END = false;
+	public static boolean ENCOURS = false;
+	public static boolean INTER = false;
+	private int resultat ;
 	
 	public Calculator(){
-		this.og = new OperantGauche(0);
-		this.od = new OperantDroite(0);
-		this.resultat = 0;
-		this.resultatInter = 0;
+		this.operation = new Operation();
+	}
+	public Calculator(Operation operation ){
+		this.operation = operation;
+	}
+	public void calculerInter() {
+		this.operation.calculer();
+		this.setResultat(this.operation.getResultat());
+		this.operation.setGauche(new Operant(this.resultat));
+		this.operation.setDroite(new Operant(0));
+		Calculator.DROITE = true;
+		Calculator.INTER = false;
+		setChanged();
+		notifyObservers();
+		
 	}
 	
-	private int calculer(){
-		System.out.println(this.og.getValeur() + this.op.getOperation() + this.od.getValeur());
-		return this.op.resultat(this.og, this.od);
-	}
-	
-	public void setResultat(int digit){
-		if(digit != View.EQUAL) {
-			resultatInter = calculer();
-			setOpG(resultatInter);
-			setOpD(0);
-			DROITE = true;
-		}
-		else {
-			this.resultat = calculer();
-			this.setOpD(0);
-			this.setOpG(0);
-			END_OPERATION = true;
-			DROITE = false;
-		}
-		this.setChanged();
-		this.notifyObservers();
-	}
-	
-	
-	public void setOperation(Operation op){
-		this.op = op;
-		this.setChanged();
-		this.notifyObservers();
+	public void calculer() {
+		this.operation.calculer();
+		this.resultat = this.operation.getResultat();
+		setChanged();
+		notifyObservers();
 	}
 
-	
-	public OperantDroite getOpD() {
-		return this.od;
+	public ArrayList<Operation> getOperations() {
+		return operations;
+	}
+
+	public void setOperations(ArrayList<Operation> operations) {
+		this.operations = operations;
+	}
+
+
+	public void setResultat(int i) {
+		this.resultat = i;
 	}
 	
-	public OperantGauche getOpG() {
-		return this.og;
+	public int getResultat() {
+		return resultat;
 	}
-	
-	public void setOpG(int a) {
-		this.og = new OperantGauche(a);
-		this.setChanged();
-		this.notifyObservers();
+
+	public Operation getOperation() {
+		return operation;
 	}
-	
-	public void setOpD(int b) {
-		this.od = new OperantDroite(b);
-		this.setChanged();
-		this.notifyObservers();
+
+	public void setOperation(Operation operation) {
+		this.operation = operation;
+		setChanged();
+		notifyObservers();
 	}
-	
-	public int getResultat(){
-		return this.resultat;
-	}
-	
-	public int getResultatInter() {
-		return this.resultatInter;
-	}
-	
-	public String operation() {
-		return this.op.getOperation();
-	}
+
 
 }

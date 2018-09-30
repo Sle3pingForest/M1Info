@@ -16,9 +16,12 @@ import java.util.Observer;
 
 import javax.swing.*;
 
-import model.Addition;
 import model.Calculator;
-import model.Sub;
+import model.Operation;
+import operant.Operant;
+import operateur.Operateur;
+import operateur.OperateurMoins;
+import operateur.OperateurPlus;
 
 public class View implements Observer{
 
@@ -33,6 +36,7 @@ public class View implements Observer{
     private JButton subtractButton = new JButton("-");
     private JButton addButton = new JButton("+");
     private JButton equateButton = new JButton(" = ");
+    private JButton historique = new JButton(" H ");
     private Calculator cal;
 
     public void view(Calculator cal) {
@@ -92,6 +96,8 @@ public class View implements Observer{
         // layout = FlowLayout.LEFT 
         panels[4].setLayout(new FlowLayout(FlowLayout.LEFT));
         panels[4].add(numberButtons[0]);
+        
+        //
 
         contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
         for (JPanel jPanel : panels) {
@@ -101,73 +107,80 @@ public class View implements Observer{
         frame.setVisible(true);
     }
 
+    
+    /* SECTION CONTROLEUR*/
     class LocalListener implements ActionListener {
 
         private int digit;
         private Calculator cal;
-        private Addition add;
-        private Sub sub;
-        
+        private Operateur operateur;
+        private Operation operation;
+
 
 
         public LocalListener(int digit, Calculator cal) {
             this.digit = digit;
             this.cal = cal;
+            this.operation = this.cal.getOperation();
         }
         
 
         public void actionPerformed(ActionEvent e) {
-        	
-            if(this.digit == MINUS || this.digit == PLUS){
-            	if(this.digit == PLUS){
-            		this.add = new Addition();
-                	cal.setOperation(this.add);
-                	this.cal.setResultat(this.digit);
-            	}
-            	else{
-            		this.sub = new Sub();
-                	cal.setOperation(this.sub);
-                	this.cal.setResultat(this.digit);
-            	}
-            }
-            else{
-                if(this.digit == EQUAL){
-                	this.cal.setResultat(this.digit);
-                    Calculator.END_OPERATION = false;
-                }
-                else{
-                	if(!Calculator.DROITE) {
-                		int number = this.cal.getOpG().getValeur()*10 + digit;
-                		this.cal.setOpG(number);
-                	}
-                	else {	
-                		int number = this.cal.getOpD().getValeur()*10 + digit;
-                		this.cal.setOpD(number);
-                	}
-                }
+        	if(this.digit == PLUS || this.digit == MINUS) {
+        		if(Calculator.INTER) {
+            		this.cal.calculerInter();
+        		}
+        		if(this.digit == PLUS ){
+        			this.operateur = new OperateurPlus();
+        		}
+        		if(this.digit == MINUS ) {
+        			this.operateur = new OperateurMoins();
+        		}
+        		Calculator.DROITE = true;
+        		this.operation.setOp(operateur);
+        		Calculator.INTER = true;
+
         	}
 
-        	//System.out.println("Gauche : " + this.cal.getOpG());
+        	else {
+        		if(this.digit == EQUAL) {
+        			this.cal.calculer();
+        			Calculator.END = true;
+        		}
+        		if(!Calculator.DROITE) {
+        			int number = this.cal.getOperation().getGauche().getValeur() *10 + digit;
+        			this.operation.setGauche(new Operant(number));
+        		}
+        		else {
+        			int number = this.cal.getOperation().getDroite().getValeur() *10 + digit;
+        			this.operation.setDroite(new Operant(number));
+        			
+        		}
+    			this.cal.setOperation(operation);
 
-        	//System.out.println("Droite: " + this.cal.getOpD());
-            //System.out.println("TYPED : "+ digit);
+        	}
+        	
         }
         
     }
+    /* FIN SECTION CONTROLEUR*/
 
 	public void update(Observable o, Object arg) {
-		
-		if(Calculator.END_OPERATION) {
-			this.textField.setText(cal.getResultat()+"");
+		if(Calculator.END) {
+			this.textField.setText(this.cal.getResultat()+"");
 		}
 		else {
 			if(!Calculator.DROITE) {
-				this.textField.setText(cal.getOpG().getValeur()+"");
-				//this.textField.setText(cal.getResultatInter() + ".."+ cal.getOpG());
+				this.textField.setText(this.cal.getOperation().getGauche().getValeur()+"");
 			}
-			if(Calculator.DROITE) {
-				this.textField.setText(cal.getResultatInter() +this.cal.operation()+  +cal.getOpD().getValeur());
-				//this.textField.setText(cal.getResultatInter() + ".."+  cal.getOpD());
+			else{
+				if(!Calculator.INTER) {
+					this.textField.setText(this.cal.getResultat()+"");
+				}
+				else{
+					this.textField.setText(this.cal.getOperation().getDroite().getValeur()+"");
+				}
+				
 			}
 		}
 	
