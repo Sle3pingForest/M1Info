@@ -6,7 +6,6 @@ import java.util.Observable;
 
 import model.Operation;
 import operant.Operant;
-import operateur.Operateur;
 
 public class Calculator extends Observable {
 
@@ -14,15 +13,19 @@ public class Calculator extends Observable {
 	private Operation operation;
 	public static boolean DROITE = false;
 	public static boolean END = false;
-	public static boolean ENCOURS = false;
 	public static boolean INTER = false;
+	public static boolean HISTORIQUE = false;
 	private int resultat ;
 	
 	public Calculator(){
+		this.operations = new ArrayList<Operation>();
 		this.operation = new Operation();
+		this.operations.add(operation);
 	}
 	public Calculator(Operation operation ){
+		this.operations = new ArrayList<Operation>();
 		this.operation = operation;
+		this.operations.add(operation);
 	}
 	public void calculerInter() {
 		this.operation.calculer();
@@ -33,16 +36,24 @@ public class Calculator extends Observable {
 		Calculator.INTER = false;
 		setChanged();
 		notifyObservers();
-		
 	}
 	
 	public void calculer() {
 		this.operation.calculer();
 		this.resultat = this.operation.getResultat();
+		Calculator.END = true;
+		setChanged();
+		notifyObservers();
+		Calculator.DROITE = false;
+		Calculator.INTER = false;
+	}
+
+	public void afficheHistorique() {
+		Calculator.HISTORIQUE = !Calculator.HISTORIQUE;
 		setChanged();
 		notifyObservers();
 	}
-
+	
 	public ArrayList<Operation> getOperations() {
 		return operations;
 	}
@@ -64,8 +75,10 @@ public class Calculator extends Observable {
 		return operation;
 	}
 
-	public void setOperation(Operation operation) {
-		this.operation = operation;
+	public void setOperation(Operation op) {
+		this.operation = op;
+		System.out.println(op.getGauche().getValeur());
+		System.out.println(op.getDroite().getValeur());
 		setChanged();
 		notifyObservers();
 	}
