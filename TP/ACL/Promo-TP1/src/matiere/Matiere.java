@@ -47,6 +47,10 @@ public class Matiere {
 		return this.nom;
 	}
 	
+	public String getLieu(){
+		return this.lieu;
+	}
+	
 	public Set<Enseignant> getEnsList(){
 		return this.ensList;
 	}
