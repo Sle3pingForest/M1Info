@@ -6,6 +6,7 @@ import javax.swing.JPanel;
 
 import view.View;
 import view.ViewHistorique;
+import view.ViewSciencetifique;
 import model.Calculator;
 
 
@@ -18,6 +19,7 @@ public class Calculatrice extends JFrame  {
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		Calculator cal = new Calculator();
+		
 		View v = new View(cal);
 		ViewHistorique vh = new ViewHistorique(cal);
 		
@@ -28,9 +30,25 @@ public class Calculatrice extends JFrame  {
 		this.add(principal);
         this.pack();
         this.setVisible(true);
+        
+        // second windows
+        JFrame frame = new JFrame();
+		this.setPreferredSize(new Dimension(900, 600)) ;
+		this.setLayout(new BorderLayout());
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		ViewSciencetifique v2 = new ViewSciencetifique(cal);
+
+		JPanel second = new JPanel();
+		second.add(v2,BorderLayout.EAST);
+
+		frame.add(second);
+        frame.pack();
+        frame.setVisible(true);
+		
 		
 	}
 	public static void main(String[] args) {
 			new Calculatrice();
+			
 	}
 }

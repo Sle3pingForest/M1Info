@@ -41,7 +41,7 @@ public class ViewHistorique extends JPanel implements Observer {
 	        this.cal = cal;
 	        
 		}
-		@Override
+		
 		public void actionPerformed(ActionEvent e) {
 			this.cal.afficheHistorique();
 			
@@ -49,8 +49,6 @@ public class ViewHistorique extends JPanel implements Observer {
 
 	}
 
-	
-	@Override
 	public void update(Observable o, Object arg) {
 		if(Calculator.HISTORIQUE) {
 			historiques.setVisible(true);

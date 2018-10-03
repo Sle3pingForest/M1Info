@@ -5,17 +5,16 @@ import java.awt.event.ActionListener;
 
 import model.Calculator;
 
-public class HistoriqueListener implements ActionListener {
+public class HexaListener implements ActionListener {
 
     private Calculator cal;
 	
-	public  HistoriqueListener(Calculator cal) {
+	public  HexaListener(Calculator cal) {
         this.cal = cal;
         
 	}
 	
 	public void actionPerformed(ActionEvent e) {
-		this.cal.afficheHistorique();
 		
 	}
 

@@ -24,7 +24,7 @@ import operateur.Operateur;
 import operateur.OperateurMoins;
 import operateur.OperateurPlus;
 
-public class View extends JPanel implements Observer {
+public class ViewSciencetifique extends JPanel implements Observer {
 
 	public static final int PLUS = -100;
     public static final int MINUS = -200;
@@ -32,15 +32,14 @@ public class View extends JPanel implements Observer {
     // ...
     private JPanel[] panels = new JPanel[6];
     private JTextField textField = new JTextField();
-    private JButton[] numberButtons = new JButton[10];
+    private JButton[] numberButtons = new JButton[16];
     private JButton subtractButton = new JButton("-");
     private JButton addButton = new JButton("+");
     private JButton equateButton = new JButton(" = ");
-    private JButton histButton = new JButton(" H ");
     private Calculator cal;
 
     
-    public View(Calculator cal) {
+    public ViewSciencetifique(Calculator cal) {
 
     	super();
     	view(cal);
@@ -64,8 +63,8 @@ public class View extends JPanel implements Observer {
 
         // initialize button 0-9 
         for (int i = 0; i < numberButtons.length; i++) {
-            numberButtons[i] = new JButton(" " + i + " ");
-            numberButtons[i].addActionListener(new View.LocalListener(i, cal));
+            numberButtons[i] = new JButton(" " + Integer.toHexString(i) + " ");
+            numberButtons[i].addActionListener(new ViewSciencetifique.LocalListener(i, cal));
         }
 
         // default layout = BorderLayout.CENTER 
@@ -80,7 +79,7 @@ public class View extends JPanel implements Observer {
         panels[1].add(numberButtons[8]);
         panels[1].add(numberButtons[9]);
         panels[1].add(addButton);
-        addButton.addActionListener(new View.LocalListener(PLUS, cal));
+        addButton.addActionListener(new ViewSciencetifique.LocalListener(PLUS, cal));
 
         // layout = FlowLayout.LEFT 
         panels[2].setLayout(new FlowLayout(FlowLayout.LEFT));
@@ -88,7 +87,7 @@ public class View extends JPanel implements Observer {
         panels[2].add(numberButtons[5]);
         panels[2].add(numberButtons[6]);
         panels[2].add(subtractButton);
-        subtractButton.addActionListener(new View.LocalListener(MINUS, cal));
+        subtractButton.addActionListener(new ViewSciencetifique.LocalListener(MINUS, cal));
 
         // layout = FlowLayout.LEFT 
         panels[3].setLayout(new FlowLayout(FlowLayout.LEFT));
@@ -96,13 +95,20 @@ public class View extends JPanel implements Observer {
         panels[3].add(numberButtons[2]);
         panels[3].add(numberButtons[3]);
         panels[3].add(equateButton);
-        equateButton.addActionListener(new View.LocalListener(EQUAL, cal));
+        equateButton.addActionListener(new ViewSciencetifique.LocalListener(EQUAL, cal));
 
         // layout = FlowLayout.LEFT 
         panels[4].setLayout(new FlowLayout(FlowLayout.LEFT));
         panels[4].add(numberButtons[0]);
-        panels[4].add(histButton);
-        histButton.addActionListener(new HistoriqueListener(cal));
+        panels[4].add(numberButtons[10]);
+        panels[4].add(numberButtons[11]);
+        panels[4].add(numberButtons[12]);
+        
+
+        panels[5].setLayout(new FlowLayout(FlowLayout.LEFT));
+        panels[5].add(numberButtons[13]);
+        panels[5].add(numberButtons[14]);
+        panels[5].add(numberButtons[15]);
 
         contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
         for (JPanel jPanel : panels) {
@@ -159,13 +165,13 @@ public class View extends JPanel implements Observer {
         			this.cal.setResultat(0);
         		}
         		else if(!Calculator.DROITE) {
-        			int number = this.cal.getOperation().getGauche().getValeur() *10 + digit;
+        			int number = this.cal.getOperation().getGauche().getValeur() *16 + digit;
         			this.operation.setGauche(new Operant(number));
         			this.operation.setDroite(new Operant(0));
         			this.cal.setOperation(operation);
         		}
         		else {
-        			int number =  this.cal.getOperation().getDroite().getValeur() *10 + digit;
+        			int number =  this.cal.getOperation().getDroite().getValeur() *16 + digit;
         			this.operation.setDroite(new Operant(number));
         			this.cal.setOperation(operation);
         			
@@ -178,19 +184,21 @@ public class View extends JPanel implements Observer {
     /* FIN SECTION CONTROLEUR*/
 
 	public void update(Observable o, Object arg) {
+
 		if(Calculator.END) {
-			this.textField.setText(this.cal.getResultat()+"");
+			this.textField.setText(Integer.toHexString(this.cal.getResultat()));
 		}
 		else {
 			if(!Calculator.DROITE) {
-				this.textField.setText(this.cal.getOperation().getGauche().getValeur()+"");
+				this.textField.setText(Integer.toHexString(this.cal.getOperation().getGauche().getValeur()));
 			}
 			else{
 				if(!Calculator.INTER) {
-					this.textField.setText(this.cal.getResultat()+"");
+					this.textField.setText(Integer.toHexString(this.cal.getOperation().getGauche().getValeur()));
 				}
 				else{
-					this.textField.setText(this.cal.getOperation().getDroite().getValeur()+"");
+					this.textField.setText(Integer.toHexString(this.cal.getOperation().getDroite().getValeur()));
+					
 				}
 				
 			}
