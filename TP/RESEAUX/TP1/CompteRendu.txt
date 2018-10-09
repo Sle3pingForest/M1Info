@@ -1,0 +1,6 @@
+routeur 2621-3
+	- show ip route:  elle est vide car le routeur n'est pas encore configuer
+	- show interface FastEthernet 0/0
+	- configure -> terminal -> interface FastEthernet 0/0
+	- allumer routeur: no shutdown
+	- ip adress 192.168.210.254 255.255.255.0
