@@ -21,15 +21,16 @@ public class Huisier {
 	}
 	
 	public void start(){
-		if(this.articleEnCours.isEstVendu()){
+		if(!this.articleEnCours.isEstVendu()){
 			this.articleEnCours.setEstVendu(true);
 		}
 		
 	}
 	
 	public void stop(){
-		this.articleEnCours.setEstVendu(true);
-		
+		if(this.articleEnCours.isEstVendu()){
+			this.articleEnCours.setEstVendu(false);
+		}
 	}
 	
 	public void changerPrix(int i){
@@ -41,6 +42,14 @@ public class Huisier {
 	
 	public void ajouterArticlePourVendre(Article a){
 		this.listeArticles.add(a);
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 
 }

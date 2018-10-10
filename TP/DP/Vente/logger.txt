@@ -1,0 +1,9 @@
+Auction Jackiii for sushi Bid= 10
+Auction Jackiii for sushi Bid= 12
+Auction Jackiii for sushi Bid= 45
+Auction Jackiii for sushi Bid= 55
+Auction Jackiii for sushi Bid= 55
+Auction Jackiii for sushi Bid= 80
+Auction nam for jambon Bid= 10
+Auction nam for jambon Bid= 4564
+Auction nam for jambon Bid= 456456456

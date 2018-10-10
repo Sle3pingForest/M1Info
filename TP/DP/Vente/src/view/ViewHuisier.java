@@ -1,8 +1,12 @@
 package view;
 
+import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.PrintWriter;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -20,7 +24,7 @@ public class ViewHuisier extends JPanel implements Observer {
 
     private JFrame frame = new JFrame("Bidder");
     private JButton startButton = new JButton("Start");
-    private JButton stropButton = new JButton("Stop");
+    private JButton stopButton = new JButton("Stop");
     private JLabel articleName = new JLabel("Article: ");
     private JLabel articlePrice = new JLabel("Price: ");
     private JLabel articleDepot = new JLabel("Depot: ");
@@ -38,6 +42,7 @@ public class ViewHuisier extends JPanel implements Observer {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         JPanel contentPane = (JPanel) frame.getContentPane();
+        contentPane.setPreferredSize(new Dimension(300, 200));
 
 //        articleName.setText("  Article: " + auction.getArticleName());
         articleName.setText("  Article: " + this.vente.getArticle().getName());
@@ -52,18 +57,32 @@ public class ViewHuisier extends JPanel implements Observer {
         startButton.addActionListener(new ControllerHuisier(vente));
         contentPane.add(startButton);
 
-        stropButton.addActionListener(new ControllerHuisier(vente));
-        contentPane.add(stropButton);
+        stopButton.addActionListener(new ControllerHuisier(vente));
+        contentPane.add(stopButton);
 
         contentPane.setLayout(new GridLayout(6, 1));
 
+		this.startButton.setEnabled(true);
+		this.stopButton.setEnabled(false);
         frame.pack();
         frame.setVisible(true);
     }
 
+
 	public void update(Observable o, Object arg) {
-		// TODO Auto-generated method stub
+
+		this.lastBid.setText("  Last bid: "  + this.vente.getArticle().getLastPrice());
+		if(!this.vente.getArticle().isEstVendu()){
+			this.startButton.setEnabled(true);
+			this.stopButton.setEnabled(false);
+		}
+		else{
+			this.startButton.setEnabled(false);
+			this.stopButton.setEnabled(true);
+			
+		}
 		
+
 	}
 
 }

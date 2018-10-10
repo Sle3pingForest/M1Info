@@ -43,9 +43,9 @@ public class VenteEnChere {
 
 
 	public static void main(String[] args) {
-			Article article = new Article("sushi", 10);
-			Huisier h = new Huisier("Jackiii", article);
-			Bidder b = new Bidder("Michel");
+			Article article = new Article("jambon", 10);
+			Huisier h = new Huisier("nam", article);
+			Bidder b = new Bidder("andre");
 			new VenteEnChere(h,b);
 			
 	}

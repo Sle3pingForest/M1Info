@@ -4,6 +4,8 @@ package view;
  * and open the template in the editor.
  */
 
+import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -13,6 +15,7 @@ import java.util.Observer;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
@@ -46,8 +49,8 @@ public class ViewBidder extends JPanel implements Observer{
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         JPanel contentPane = (JPanel) frame.getContentPane();
+        contentPane.setPreferredSize(new Dimension(300, 200));
 
-//        articleName.setText("  Article: " + auction.getArticleName());
         articleName.setText("  Article: " + this.vente.getArticle().getName());
         contentPane.add(articleName);
 
@@ -61,8 +64,8 @@ public class ViewBidder extends JPanel implements Observer{
         textField.setText("");
         textField.setHorizontalAlignment(JTextField.RIGHT);
         contentPane.add(textField);
-
-        bidButton.addActionListener(new ControllerBidder( vente));
+        textField.setEditable(false);
+        bidButton.addActionListener(new ControllerBidder(vente, textField));
         contentPane.add(bidButton);
 
         contentPane.setLayout(new GridLayout(6, 1));
@@ -72,6 +75,15 @@ public class ViewBidder extends JPanel implements Observer{
     }
 
 	public void update(Observable o, Object arg) {
+		if(this.vente.getArticle().isEstVendu()){
+			this.textField.setEditable(true);
+		}
+		else{
+
+			JOptionPane.showMessageDialog(null,"Article Vendu");
+			this.textField.setEditable(false);
+		}
+		this.lastBid.setText("  Last bid: "  + this.vente.getArticle().getLastPrice());
 		
 	}
 
