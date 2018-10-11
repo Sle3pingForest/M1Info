@@ -8,6 +8,7 @@ import javax.swing.JPanel;
 import model.Article;
 import model.Bidder;
 import model.Huisier;
+import model.Lot;
 import model.Vente;
 import view.ViewBidder;
 import view.ViewHuisier;
@@ -43,9 +44,19 @@ public class VenteEnChere {
 
 
 	public static void main(String[] args) {
-			Article article = new Article("jambon", 10);
-			Huisier h = new Huisier("nam", article);
+
+			Article article = new Article("Epe", 100);
+			Article article1 = new Article("Armure", 80);
+			Article article2 = new Article("Casque", 50);
+			
+			Lot lots = new Lot();
+			lots.ajouterAticle(article);
+			lots.ajouterAticle(article1);
+			lots.ajouterAticle(article2);
+			
 			Bidder b = new Bidder("andre");
+			Huisier h = new Huisier("nam", article1);
+			
 			new VenteEnChere(h,b);
 			
 	}

@@ -1,47 +1,41 @@
 package model;
 
-import java.util.ArrayList;
 
 public class Huisier {
 	
 	private String name;
-	private ArrayList<Article> listeArticles;
-	private Article articleEnCours;
+	private Lot lot;
 	
-	public Huisier(){
-		this.name = "Vendeur";
-		this.listeArticles = new ArrayList<Article>();
+
+	public Huisier(String name, Lot lot){
+		this.name = name;
+		this.lot = lot;
 	}
 	
-	public Huisier(String name, Article article){
+	public Huisier(String name, Produit a){
 		this.name = name;
-		this.listeArticles = new ArrayList<Article>();
-		this.articleEnCours = article;
-		this.listeArticles.add(articleEnCours);
+		this.lot = new Lot();
+		this.lot.ajouterAticle(a);
 	}
 	
 	public void start(){
-		if(!this.articleEnCours.isEstVendu()){
-			this.articleEnCours.setEstVendu(true);
+		if(!this.lot.isEstVendu()){
+			this.lot.setEstVendu(true);
 		}
 		
 	}
 	
 	public void stop(){
-		if(this.articleEnCours.isEstVendu()){
-			this.articleEnCours.setEstVendu(false);
+		if(this.lot.isEstVendu()){
+			this.lot.setEstVendu(false);
 		}
 	}
 	
 	public void changerPrix(int i){
 	}
 	
-	public Article getArticleEnVendre(){
-		return this.articleEnCours;
-	}
-	
-	public void ajouterArticlePourVendre(Article a){
-		this.listeArticles.add(a);
+	public Produit getLot(){
+		return this.lot;
 	}
 
 	public String getName() {

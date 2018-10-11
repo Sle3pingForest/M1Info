@@ -51,13 +51,13 @@ public class ViewBidder extends JPanel implements Observer{
         JPanel contentPane = (JPanel) frame.getContentPane();
         contentPane.setPreferredSize(new Dimension(300, 200));
 
-        articleName.setText("  Article: " + this.vente.getArticle().getName());
+        articleName.setText("  Article: " + this.vente.getLot().getName() + ": " + this.vente.getLot().getListProduit().size() + " piece(s)");
         contentPane.add(articleName);
 
-        articlePrice.setText("  Price: " + + this.vente.getArticle().getPriceInit());
+        articlePrice.setText("  Price: " + + this.vente.getLot().getPriceInit());
         contentPane.add(articlePrice);
 
-        lastBid.setText("  Last bid: "  + this.vente.getArticle().getPriceInit());
+        lastBid.setText("  Last bid: "  + this.vente.getLot().getPriceInit());
         contentPane.add(lastBid);
 
         textField.setColumns(5);
@@ -75,7 +75,7 @@ public class ViewBidder extends JPanel implements Observer{
     }
 
 	public void update(Observable o, Object arg) {
-		if(this.vente.getArticle().isEstVendu()){
+		if(this.vente.getLot().isEstVendu()){
 			this.textField.setEditable(true);
 		}
 		else{
@@ -83,7 +83,7 @@ public class ViewBidder extends JPanel implements Observer{
 			JOptionPane.showMessageDialog(null,"Article Vendu");
 			this.textField.setEditable(false);
 		}
-		this.lastBid.setText("  Last bid: "  + this.vente.getArticle().getLastPrice());
+		this.lastBid.setText("  Last bid: "  + this.vente.getLot().getLastPrice());
 		
 	}
 

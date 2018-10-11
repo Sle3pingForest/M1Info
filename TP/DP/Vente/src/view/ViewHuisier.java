@@ -22,7 +22,7 @@ import controller.ControllerHuisier;
 
 public class ViewHuisier extends JPanel implements Observer {
 
-    private JFrame frame = new JFrame("Bidder");
+    private JFrame frame = new JFrame("Huisier");
     private JButton startButton = new JButton("Start");
     private JButton stopButton = new JButton("Stop");
     private JLabel articleName = new JLabel("Article: ");
@@ -44,14 +44,13 @@ public class ViewHuisier extends JPanel implements Observer {
         JPanel contentPane = (JPanel) frame.getContentPane();
         contentPane.setPreferredSize(new Dimension(300, 200));
 
-//        articleName.setText("  Article: " + auction.getArticleName());
-        articleName.setText("  Article: " + this.vente.getArticle().getName());
+        articleName.setText("  Article: " + this.vente.getLot().getName() + ": " + this.vente.getLot().getListProduit().size() + " piece(s)");
         contentPane.add(articleName);
 
-        articlePrice.setText("  Price: " + this.vente.getArticle().getPriceInit());
+        articlePrice.setText("  Price: " + this.vente.getLot().getPriceInit());
         contentPane.add(articlePrice);
 
-        lastBid.setText("  Last bid: " + this.vente.getArticle().getLastPrice() );
+        lastBid.setText("  Last bid: " + this.vente.getLot().getPriceInit() );
         contentPane.add(lastBid);
 
         startButton.addActionListener(new ControllerHuisier(vente));
@@ -71,8 +70,7 @@ public class ViewHuisier extends JPanel implements Observer {
 
 	public void update(Observable o, Object arg) {
 
-		this.lastBid.setText("  Last bid: "  + this.vente.getArticle().getLastPrice());
-		if(!this.vente.getArticle().isEstVendu()){
+		if(!this.vente.getLot().isEstVendu()){
 			this.startButton.setEnabled(true);
 			this.stopButton.setEnabled(false);
 		}
@@ -81,7 +79,8 @@ public class ViewHuisier extends JPanel implements Observer {
 			this.stopButton.setEnabled(true);
 			
 		}
-		
+
+		this.lastBid.setText("  Last bid: "  + this.vente.getLot().getLastPrice());
 
 	}
 

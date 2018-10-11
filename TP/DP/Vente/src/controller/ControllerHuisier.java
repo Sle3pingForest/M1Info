@@ -17,7 +17,7 @@ public class ControllerHuisier implements ActionListener {
 	}
 	
 	public void actionPerformed(ActionEvent e) {
-		if(!this.vente.getArticle().isEstVendu()){
+		if(!this.vente.getLot().isEstVendu()){
 			this.vente.start();
 		}
 		else{
@@ -29,8 +29,8 @@ public class ControllerHuisier implements ActionListener {
 	        	}
         		FileWriter writer = new FileWriter(fichier, true);
 	            try {
-	            	for(Integer i : this.vente.getHistoriqueEnchere()){
-		                writer.write("Auction "+ this.vente.getHuisier().getName() +" for " + this.vente.getArticle().getName()+ " Bid= "+ i +"\n");
+	            	for(String s : this.vente.getHistoriqueEnchere()){
+		                writer.write(s + "\n");
 	            	}
 	            } finally {
 	                writer.close();

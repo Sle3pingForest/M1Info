@@ -1,11 +1,11 @@
 package model;
 
-public class Article {
+import java.util.ArrayList;
+
+public class Article implements Produit {
 	private String name;
 	private int priceInit;
 	private int lastPrice;
-	
-
 	private Bidder bidder;
 	private boolean estVendu;
 	
@@ -66,5 +66,13 @@ public class Article {
 	public void setEstVendu(boolean estVendu) {
 		this.estVendu = estVendu;
 	}
+
+
+	@Override
+	public ArrayList<Produit> getListProduit() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 
 }

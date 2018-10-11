@@ -12,9 +12,4 @@ public class Bidder {
 		this.nameBidder = name;
 	}
 	
-	//a verifier si on l implement ici
-	public void proposerPrice(int i){
-		
-	}
-
 }
