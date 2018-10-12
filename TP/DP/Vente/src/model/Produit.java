@@ -1,9 +1,7 @@
 package model;
 
-import java.util.ArrayList;
 
 public interface Produit {
-
 
 	public String getName() ;
 
@@ -24,9 +22,15 @@ public interface Produit {
 	public boolean isEstVendu();
 
 	public void setEstVendu(boolean estVendu);
-
-	public ArrayList<Produit> getListProduit();
 	
-
+	public Produit getProduit();
+	
+	public void ajouterArticle(Produit a);
+	
+	public void reduction();
+	
+	public int quantite();
+	
+	public Lieu getLieu();
 
 }

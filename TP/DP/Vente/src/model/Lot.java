@@ -4,7 +4,10 @@ import java.util.ArrayList;
 
 public class Lot implements Produit {
 	
-	private ArrayList<Produit> listProduit;
+	private ArrayList<Produit> listProduit;//contient elle meme une list de produit
+	
+	
+	
 	private int totalLastPrice = 0;
 	private int totalPriceInit = 0;
 	private Bidder bidder;
@@ -17,18 +20,31 @@ public class Lot implements Produit {
 		this.bidder = null;
 	}
 	
-	public void ajouterAticle( Produit p){
+	public void ajouterArticle(Produit p){
 		this.listProduit.add(p);
 		for(Produit a: listProduit){
 			totalPriceInit += a.getPriceInit();
 		}
+
+		reduction();
 		this.totalLastPrice = totalPriceInit;
+	}
+	
+	
+	public void reduction(){
+		if(listProduit.size() == 2){
+			setPriceInit(totalPriceInit - totalPriceInit*10/100);
+		}
+		if(listProduit.size() == 3){
+			setPriceInit(totalPriceInit - totalPriceInit*40/100);
+		}
+		
 	}
 	
 	public String getName() {
 		StringBuilder sb = new StringBuilder("");
 		for( Produit p : listProduit){
-			sb.append(((Article)p).getName() + " ");
+			sb.append(((Composant)p).getName() + " ");
 		}
 		return sb.toString();
 	}
@@ -43,7 +59,7 @@ public class Lot implements Produit {
 	}
 
 	public void setPriceInit(int priceInit) {
-		// TODO Auto-generated method stub
+		this.totalPriceInit = priceInit;
 		
 	}
 
@@ -76,6 +92,20 @@ public class Lot implements Produit {
 	
 	public ArrayList<Produit> getListProduit(){
 		return this.listProduit;
+	}
+
+
+	public Produit getProduit() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public int quantite() {
+		return this.listProduit.size();
+	}
+
+	public Lieu getLieu() {
+		return this.getListProduit().get(0).getLieu();
 	}
 
 

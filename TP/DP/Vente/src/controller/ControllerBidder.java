@@ -1,15 +1,13 @@
 package controller;
 
-import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
-import java.io.FileWriter;
 import java.util.Calendar;
 import java.util.Date;
 
 import javax.swing.JTextField;
 
+import model.Journal;
 import model.Vente;
 
 public class ControllerBidder implements ActionListener {
@@ -26,14 +24,14 @@ public class ControllerBidder implements ActionListener {
 		if(!this.text.getText().equals("")){
 			Date infoLogger = Calendar.getInstance().getTime();
 			String s = "";
-			if(Integer.valueOf(this.text.getText()) > this.vente.getLot().getLastPrice()){
+			if(Integer.valueOf(this.text.getText()) > this.vente.getProduit().getLastPrice()){
 				this.vente.augmenterPrice(Integer.valueOf(this.text.getText()));
-				s = infoLogger + ": Auction "+ this.vente.getHuisier().getName() +" for " + this.vente.getLot().getName()+ "- Bid= "+ this.vente.getLot().getLastPrice();
+				s = infoLogger + ": Auction "+ this.vente.getHuisier().getName() +" for " + this.vente.getProduit().getName()+ "- Bid= "+ this.vente.getProduit().getLastPrice();
 			}
 			else{
-				s = infoLogger + ": Auction "+ this.vente.getHuisier().getName() +" for " + this.vente.getLot().getName()+ "- Bid= "+ this.text.getText();
+				s = infoLogger + ": Auction "+ this.vente.getHuisier().getName() +" for " + this.vente.getProduit().getName()+ "- Bid= "+ this.text.getText();
 			}
-			this.vente.ajouterAuHistorique(s);
+			Journal.getInstance().ajouterAujournal(s);
 		}
 	}
 

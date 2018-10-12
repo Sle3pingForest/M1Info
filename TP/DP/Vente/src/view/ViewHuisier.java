@@ -44,13 +44,16 @@ public class ViewHuisier extends JPanel implements Observer {
         JPanel contentPane = (JPanel) frame.getContentPane();
         contentPane.setPreferredSize(new Dimension(300, 200));
 
-        articleName.setText("  Article: " + this.vente.getLot().getName() + ": " + this.vente.getLot().getListProduit().size() + " piece(s)");
+        articleName.setText("  Article: " + this.vente.getProduit().getName() + ": " + this.vente.getProduit().quantite() + " piece(s)");
         contentPane.add(articleName);
 
-        articlePrice.setText("  Price: " + this.vente.getLot().getPriceInit());
+        articlePrice.setText("  Price: " + this.vente.getProduit().getPriceInit());
         contentPane.add(articlePrice);
 
-        lastBid.setText("  Last bid: " + this.vente.getLot().getPriceInit() );
+        articleDepot.setText("  Depot: " + this.vente.getProduit().getLieu().getNom());
+        contentPane.add(articleDepot);
+
+        lastBid.setText("  Last bid: " + this.vente.getProduit().getPriceInit() );
         contentPane.add(lastBid);
 
         startButton.addActionListener(new ControllerHuisier(vente));
@@ -70,7 +73,7 @@ public class ViewHuisier extends JPanel implements Observer {
 
 	public void update(Observable o, Object arg) {
 
-		if(!this.vente.getLot().isEstVendu()){
+		if(!this.vente.getProduit().isEstVendu()){
 			this.startButton.setEnabled(true);
 			this.stopButton.setEnabled(false);
 		}
@@ -80,7 +83,7 @@ public class ViewHuisier extends JPanel implements Observer {
 			
 		}
 
-		this.lastBid.setText("  Last bid: "  + this.vente.getLot().getLastPrice());
+		this.lastBid.setText("  Last bid: "  + this.vente.getProduit().getLastPrice());
 
 	}
 

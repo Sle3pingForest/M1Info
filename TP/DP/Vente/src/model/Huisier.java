@@ -4,19 +4,15 @@ package model;
 public class Huisier {
 	
 	private String name;
-	private Lot lot;
+	private Produit lot;
 	
-
-	public Huisier(String name, Lot lot){
-		this.name = name;
-		this.lot = lot;
-	}
 	
 	public Huisier(String name, Produit a){
 		this.name = name;
-		this.lot = new Lot();
-		this.lot.ajouterAticle(a);
+		this.lot = a;
+		System.out.println(this.lot);
 	}
+	
 	
 	public void start(){
 		if(!this.lot.isEstVendu()){

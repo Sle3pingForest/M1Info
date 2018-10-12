@@ -6,6 +6,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.PrintWriter;
 
+import model.Journal;
 import model.Vente;
 
 public class ControllerHuisier implements ActionListener {
@@ -17,7 +18,7 @@ public class ControllerHuisier implements ActionListener {
 	}
 	
 	public void actionPerformed(ActionEvent e) {
-		if(!this.vente.getLot().isEstVendu()){
+		if(!this.vente.getProduit().isEstVendu()){
 			this.vente.start();
 		}
 		else{
@@ -29,7 +30,7 @@ public class ControllerHuisier implements ActionListener {
 	        	}
         		FileWriter writer = new FileWriter(fichier, true);
 	            try {
-	            	for(String s : this.vente.getHistoriqueEnchere()){
+	            	for(String s : Journal.getInstance().getHistoriqueEnchere()){
 		                writer.write(s + "\n");
 	            	}
 	            } finally {

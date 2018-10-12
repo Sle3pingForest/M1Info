@@ -1,27 +1,22 @@
 package model;
 
-import java.util.ArrayList;
 import java.util.Observable;
 
 public class Vente extends Observable  {
 	
 	private Bidder bidder;
 	private Huisier huisier;
-	private Produit lot;
 	
-	public ArrayList<String> historiqueEnchere;
 	
 	
 	public Vente(Huisier h, Bidder b){
 		this.bidder = b;
 		this.huisier = h;
-		this.historiqueEnchere = new ArrayList<>();
-		this.lot = h.getLot();
 	}
 	
 	public void stop(){
 		this.huisier.stop();
-		this.lot.setBidder(bidder);
+		this.huisier.getLot().setBidder(bidder);
 		setChanged();
 		notifyObservers();
 	}
@@ -33,20 +28,18 @@ public class Vente extends Observable  {
 	}
 	
 	public void augmenterPrice(int d){
-		if(this.lot != null && d > this.lot.getLastPrice()){
-			this.lot.setLastPrice(d);
+		if(this.huisier.getLot() != null && d > this.huisier.getLot().getLastPrice()){
+			this.huisier.getLot().setLastPrice(d);
 		}
 		setChanged();
 		notifyObservers();
 	}
 	
-	public Produit getLot(){
-		return this.lot;
+	public Produit getProduit(){
+		return this.huisier.getLot();
 	}
  
-	public void ajouterAuHistorique(String s){
-		this.historiqueEnchere.add(s);
-	}
+
 	public Bidder getBidder() {
 		return bidder;
 	}
@@ -63,12 +56,6 @@ public class Vente extends Observable  {
 		this.huisier = huisier;
 	}
 
-	public ArrayList<String> getHistoriqueEnchere() {
-		return historiqueEnchere;
-	}
 
-	public void setHistoriqueEnchere(ArrayList<String> historiqueEnchere) {
-		this.historiqueEnchere = historiqueEnchere;
-	}
 	
 }
