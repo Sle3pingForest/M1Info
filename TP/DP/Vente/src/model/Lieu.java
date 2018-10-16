@@ -13,4 +13,6 @@ public class Lieu {
 		return this.nom;
 	}
 	
+	//utilise la chaine de responsabilyte pour cette class
+	
 }
