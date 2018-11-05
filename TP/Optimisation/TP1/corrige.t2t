@@ -1,0 +1,143 @@
+TP1
+
+Corrigé de l'exercice 2
+
+%!encoding: UTF-8
+
+
+= Exercice 2 : Choix d’un projet =
+
+Lors d’une réunion de différents cadres de l’entreprise, certaines possibilités de nouveaux investissements ont été évoquées. Suite à cette réunion, l’analyste financier de l’entreprise présente au responsable de la gestion scientifique de l’entreprise, un tableau sommaire des divers investissements requis au début de chaque année, des valeurs actualisées nettes (VAN) de chaque projet ainsi que les fonds disponibles.
+
+||   | Investissement requis (euros) |||||
+|| Projet                                                    | VAN    | Année1 | Année2 | Année3 | Année4 |
+| A: Augmentation de la capacité du département d'assemblage | 92000  | 16000  | 22000  | 20000  | 15000
+| B: Agrandissement de l’entrepôt                            | 40000  | 25000  | 10000  | 5000   | 0
+| C: Achat d’un nouvel équipement                            | 100000 | 40000  | 25000  | 15000  | 0
+| D: Recherche sur un nouveau produit                        | 35000  | 15000  | 15000  | 15000  | 15000
+|| Fonds disponibles (euros) |                                        | 80000  | 65000  | 47000  | 25000
+
+
+
++ L’analyste financier vous demande de lui déterminer les projets qui maximisent la valeur actuelle nette totale tout en respectant les contraintes de fonds disponibles. 
+Il aimerait connaître cette solution en supposant que les projets sont divisibles.
+Formuler le programme linéaire qui correspond à cette situation (identification des variables, fonction économique et contraintes).
+
+On va utiliser quatre variables, xA, xB, xC, xD associées
+respectivement aux projets A,B,C et D.
+
+L'énoncé ne précise pas si le cofinancement est autorisé, c'est à dire
+s'il est possible que des projets soient partiellement financés.
+Si c'est le cas, les variables auront comme contraintes:
+
+```
+0 <= xA <= 1;
+```
+
+Dans le cas contraire:
+
+```
+0 <= xA <= 1;
+int xA;
+```
+
+ou encore
+
+```
+binary xA;
+```
+
+L'objectif est de maximiser le rendement (VAN) :
+```
+max: 92 xA + 40 xB + 100 xC + 35 xD;
+```
+
+et il y a une contrainte budgétaire par année:
+
+```
+Annee1: 16 xA + 25 xB + 40 xC + 15 xD <= 80;
+Annee2: 22 xA + 10 xB + 25 xC + 15 xD <= 65;
+Annee3: 20 xA + 5 xB + 15 xC + 15 xD <= 47;
+Annee4: 15 xA + 15 xD <= 25;
+```
++ Déterminer la solution optimale du programme linéaire à l'aide de lp-solve.
+
+Le fichier .lp obtenu est donc le suivant:
+```
+max: 92 xA + 40 xB + 100 xC + 35 xD;
+Annee1: 16 xA + 25 xB + 40 xC + 15 xD <= 80;
+Annee2: 22 xA + 10 xB + 25 xC + 15 xD <= 65;
+Annee3: 20 xA + 5 xB + 15 xC + 15 xD <= 47;
+Annee4: 15 xA + 15 xD <= 25;
+0 <= xA <= 1;
+0 <= xB <= 1;
+0 <= xC <= 1;
+0 <= xD <= 1;
+```
+et lp-solve nous dit:
+```
+Value of objective function: 237
+
+Actual values of the variables:
+xA                              1
+xB                            0.6
+xC                              1
+xD                            0.6
+```
+
+Les projets A et C sont financés entièrement.
+Les projets B et C sont financés chacun à hauteur de 60%.
+Le rendement attendu est : 237 k€.
+
+Si on décide que le cofinancement est impossible, il faut résoudre le
+problème:
+```
+max: 92 xA + 40 xB + 100 xC + 35 xD;
+Annee1: 16 xA + 25 xB + 40 xC + 15 xD <= 80;
+Annee2: 22 xA + 10 xB + 25 xC + 15 xD <= 65;
+Annee3: 20 xA + 5 xB + 15 xC + 15 xD <= 47;
+Annee4: 15 xA + 15 xD <= 25;
+binary xA, xB, xC, xD;
+```
+
+et on obtient
+```
+
+Value of objective function: 192
+
+Actual values of the variables:
+xA                              1
+xB                              0
+xC                              1
+xD                              0
+
+```
+Les projets A et C sont financés entièrement.
+Les projets B et D ne sont pas financés.
+Le rendement attendu est : 192 k€.
+
++ Interpréter cette solution pour l’analyste financier en supposant qu’on peut entreprendre qu’une partie de certains projets. Quelle est la valeur actuelle nette du programme d’investissement ?
++ L’analyste financier vous demande de lui fournir également la solution optimale en ajoutant toutefois la restriction suivante :
+on envisage d’investir dans un nouvel équipement si on investit d'abord dans la recherche sur le nouveau produit.
+   + Expliquer comment cette restriction se formule dans le programme linéaire.  
+``` 
+   xC <= xD;
+```
+   + Résoudre le programme linéaire en tenant compte de la restriction.
+```
+   Value of objective function: 175
+
+Actual values of the variables:
+xA                              0
+xB                              1
+xC                              1
+xD                              1
+```   
+
+  + Quels sont les projets qui doivent être acceptés et ceux qui sont refusés ? Indiquer également la valeur actualisée nette maximale que l’on obtient.
+   
+Les projets B, C et D sont financés entièrement.
+Le projet A n’est pas financé.
+Le rendement attendu est : 175 k€.
+
+

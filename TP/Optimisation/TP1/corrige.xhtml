@@ -1,0 +1,228 @@
+<?xml version="1.0"
+      encoding="UTF-8"
+?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>TP1</title>
+<meta name="generator" content="http://txt2tags.org" />
+<link rel="stylesheet" type="text/css" href="site.css" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+</head>
+<body>
+
+<div class="header" id="header">
+<h1>TP1</h1>
+<h3>Corrigé de l'exercice 2</h3>
+</div>
+
+<div class="body" id="body">
+
+<h1>Exercice 2 : Choix d’un projet</h1>
+
+<p>
+Lors d’une réunion de différents cadres de l’entreprise, certaines possibilités de nouveaux investissements ont été évoquées. Suite à cette réunion, l’analyste financier de l’entreprise présente au responsable de la gestion scientifique de l’entreprise, un tableau sommaire des divers investissements requis au début de chaque année, des valeurs actualisées nettes (VAN) de chaque projet ainsi que les fonds disponibles.
+</p>
+
+<table border="1">
+<tr>
+<th></th>
+<th colspan="5">Investissement requis (euros)</th>
+</tr>
+<tr>
+<th>Projet</th>
+<th>VAN</th>
+<th>Année1</th>
+<th>Année2</th>
+<th>Année3</th>
+<th>Année4</th>
+</tr>
+<tr>
+<td>A: Augmentation de la capacité du département d'assemblage</td>
+<td>92000</td>
+<td>16000</td>
+<td>22000</td>
+<td>20000</td>
+<td>15000</td>
+</tr>
+<tr>
+<td>B: Agrandissement de l’entrepôt</td>
+<td>40000</td>
+<td>25000</td>
+<td>10000</td>
+<td>5000</td>
+<td>0</td>
+</tr>
+<tr>
+<td>C: Achat d’un nouvel équipement</td>
+<td>100000</td>
+<td>40000</td>
+<td>25000</td>
+<td>15000</td>
+<td>0</td>
+</tr>
+<tr>
+<td>D: Recherche sur un nouveau produit</td>
+<td>35000</td>
+<td>15000</td>
+<td>15000</td>
+<td>15000</td>
+<td>15000</td>
+</tr>
+<tr>
+<th>Fonds disponibles (euros)</th>
+<th></th>
+<th>80000</th>
+<th>65000</th>
+<th>47000</th>
+<th>25000</th>
+</tr>
+</table>
+
+<ol>
+<li>L’analyste financier vous demande de lui déterminer les projets qui maximisent la valeur actuelle nette totale tout en respectant les contraintes de fonds disponibles. 
+Il aimerait connaître cette solution en supposant que les projets sont divisibles.
+Formuler le programme linéaire qui correspond à cette situation (identification des variables, fonction économique et contraintes).
+<p></p>
+On va utiliser quatre variables, xA, xB, xC, xD associées
+respectivement aux projets A,B,C et D.
+<p></p>
+L'énoncé ne précise pas si le cofinancement est autorisé, c'est à dire
+s'il est possible que des projets soient partiellement financés.
+Si c'est le cas, les variables auront comme contraintes:
+<p></p>
+<pre>
+0 &lt;= xA &lt;= 1;
+</pre>
+
+<p></p>
+Dans le cas contraire:
+<p></p>
+<pre>
+0 &lt;= xA &lt;= 1;
+int xA;
+</pre>
+
+<p></p>
+ou encore
+<p></p>
+<pre>
+binary xA;
+</pre>
+
+<p></p>
+L'objectif est de maximiser le rendement (VAN) :
+<pre>
+max: 92 xA + 40 xB + 100 xC + 35 xD;
+</pre>
+
+<p></p>
+et il y a une contrainte budgétaire par année:
+<p></p>
+<pre>
+Annee1: 16 xA + 25 xB + 40 xC + 15 xD &lt;= 80;
+Annee2: 22 xA + 10 xB + 25 xC + 15 xD &lt;= 65;
+Annee3: 20 xA + 5 xB + 15 xC + 15 xD &lt;= 47;
+Annee4: 15 xA + 15 xD &lt;= 25;
+</pre>
+
+</li>
+<li>Déterminer la solution optimale du programme linéaire à l'aide de lp-solve.
+<p></p>
+Le fichier .lp obtenu est donc le suivant:
+<pre>
+max: 92 xA + 40 xB + 100 xC + 35 xD;
+Annee1: 16 xA + 25 xB + 40 xC + 15 xD &lt;= 80;
+Annee2: 22 xA + 10 xB + 25 xC + 15 xD &lt;= 65;
+Annee3: 20 xA + 5 xB + 15 xC + 15 xD &lt;= 47;
+Annee4: 15 xA + 15 xD &lt;= 25;
+0 &lt;= xA &lt;= 1;
+0 &lt;= xB &lt;= 1;
+0 &lt;= xC &lt;= 1;
+0 &lt;= xD &lt;= 1;
+</pre>
+
+et lp-solve nous dit:
+<pre>
+Value of objective function: 237
+
+Actual values of the variables:
+xA                              1
+xB                            0.6
+xC                              1
+xD                            0.6
+</pre>
+
+<p></p>
+Les projets A et C sont financés entièrement.
+Les projets B et C sont financés chacun à hauteur de 60%.
+Le rendement attendu est : 237 k€.
+<p></p>
+Si on décide que le cofinancement est impossible, il faut résoudre le
+problème:
+<pre>
+max: 92 xA + 40 xB + 100 xC + 35 xD;
+Annee1: 16 xA + 25 xB + 40 xC + 15 xD &lt;= 80;
+Annee2: 22 xA + 10 xB + 25 xC + 15 xD &lt;= 65;
+Annee3: 20 xA + 5 xB + 15 xC + 15 xD &lt;= 47;
+Annee4: 15 xA + 15 xD &lt;= 25;
+binary xA, xB, xC, xD;
+</pre>
+
+<p></p>
+et on obtient
+<pre>
+
+Value of objective function: 192
+
+Actual values of the variables:
+xA                              1
+xB                              0
+xC                              1
+xD                              0
+
+</pre>
+
+Les projets A et C sont financés entièrement.
+Les projets B et D ne sont pas financés.
+Le rendement attendu est : 192 k€.
+<p></p>
+</li>
+<li>Interpréter cette solution pour l’analyste financier en supposant qu’on peut entreprendre qu’une partie de certains projets. Quelle est la valeur actuelle nette du programme d’investissement ?
+</li>
+<li>L’analyste financier vous demande de lui fournir également la solution optimale en ajoutant toutefois la restriction suivante :
+on envisage d’investir dans un nouvel équipement si on investit d'abord dans la recherche sur le nouveau produit.
+   <ol>
+   <li>Expliquer comment cette restriction se formule dans le programme linéaire.  
+<pre>
+   xC &lt;= xD;
+</pre>
+
+   </li>
+   <li>Résoudre le programme linéaire en tenant compte de la restriction.
+<pre>
+   Value of objective function: 175
+
+Actual values of the variables:
+xA                              0
+xB                              1
+xC                              1
+xD                              1
+</pre>
+
+   <p></p>
+   </li>
+   </ol>
+</li>
+<li>Quels sont les projets qui doivent être acceptés et ceux qui sont refusés ? Indiquer également la valeur actualisée nette maximale que l’on obtient.
+<p></p>
+Les projets B, C et D sont financés entièrement.
+Le projet A n’est pas financé.
+Le rendement attendu est : 175 k€.
+</li>
+</ol>
+
+</div>
+<!-- xhtml code generated by txt2tags 2.6 (http://txt2tags.org) -->
+<!-- cmdline: txt2tags -\-config=/home/ejeandel/Travail/ejeandel/Web/config.t2t -\-style=site.css -\-css-sugar -t xhtml corrige.t2t -->
+</body></html>

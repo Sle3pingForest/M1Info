@@ -1,0 +1,141 @@
+TP1
+
+Prise en main de lpsolve
+
+%!encoding: UTF-8
+
+
+
+lp_solve est un programme permettant de résoudre les programmes 
+linéaires, et les programmes linéaires en nombres entiers.
+Il permet de résoudre des petits programmes linéaires, mais n'est pas suffisant pour les besoins en
+entreprise, où il est nécessaire d'utiliser de meilleurs logiciels (comme cplex).
+Il est cependant suffisant pour les besoins de nos TPs.
+
+Il est également possible de l'utiliser comme une bibliothèque
+("library") pour des situations plus compliquées
+
+Le but de ce premier TD est de prendre en main ce logiciel.
+
+Les fichiers nécessaires sont [ici TP1.zip].
+
+= lp_solve sous windows =
+
+Pour utiliser lp_solve sous Windows, il faut télécharger le binaire à
+l'adresse suivante:
+
+[version 32 bits http://sourceforge.net/projects/lpsolve/files/lpsolve/5.5.2.0/lp_solve_5.5.2.0_exe_win32.zip/download]
+
+
+= Les fichiers .lp =
+
+Le programme lp_solve permet de résoudre des programmes linéaires
+écrits dans un fichier au format ``.lp``.
+
+**Attention** Tous les solveurs de programme linéaire appellent leur format ``.lp`` mais le format
+``.lp`` de lp_solve est différent de celui de cplex, qui est différent de celui de Xpress.
+
+Voici un exemple de tel fichier
+```
+max: 5x1-3x2;
+x1 - x2 >= 2;
+2x1 + 3x2 <= 4;
+-x1 + 6x2 = 10;
+```
+
+  - Recopier le programme précédent dans un fichier ``example1.lp``
+puis lancer la commande
+```
+lp_solve example1.lp
+```
+
+  - Récupérez dans l'archive ``TP1.tar.gz`` le fichier ``brasseur.lp``.
+  Lancer la commande suivante et vérifiez que le tableau final est
+identique au tableau vu en cours. Notez en particulier les différences.
+```
+lp_solve  -s0 -S7 brasseur.lp
+```
+
+
+= Exercice 1 =
+
+  + Déterminer la solution optimale de l'exemple 1 ci-dessus.
+  + Changer le sens de la 3ème contrainte pour obtenir ``-x1 + 6x2 <= 10``.
+  + Quelle est maintenant la valeur du problème ainsi que la valeur des variables et des coûts réduits (de toutes les variables y compris les variables d’écart) ?
+  + Déterminer la valeur des variables duales optimales
+  + Entrer le nouveau problème suivant (appelé pb2):
+```
+  Max	x1 + 2x2 + 3x3 
+  s.c.	−x1 + x2 + x3 <= 20
+        x1 − 3x2 + x3 <= 30 
+        0 <= x1 <= 40 , x2 >= 0
+```
+  + Déterminer la solution optimale du problème (pb2).
+  + Ajouter la contrainte suivante à (pb2) :  ``x1 + 2x2 + 3x3 <= 50``
+  + Quelle est la nouvelle solution optimale ?
+  + [Lire la documentation du format .lp http://lpsolve.sourceforge.net/5.5/lp-format.htm] (en particulier les exemples)
+  + Résoudre les deux problèmes pb1 et pb2 en considérant désormais que les variables sont entières.
+  
+  
+  
+  
+  
+= Exercice 2 : Choix d’un projet =
+
+Lors d’une réunion de différents cadres de l’entreprise, certaines possibilités de nouveaux investissements ont été évoquées. Suite à cette réunion, l’analyste financier de l’entreprise présente au responsable de la gestion scientifique de l’entreprise, un tableau sommaire des divers investissements requis au début de chaque année, des valeurs actualisées nettes (VAN) de chaque projet ainsi que les fonds disponibles.
+
+||   | Investissement requis (euros) |||||
+|| Projet                                                    | VAN    | Année1 | Année2 | Année3 | Année4 |
+| A: Augmentation de la capacité du département d'assemblage | 92000  | 16000  | 22000  | 20000  | 15000
+| B: Agrandissement de l’entrepôt                            | 40000  | 25000  | 10000  | 5000   | 0
+| C: Achat d’un nouvel équipement                            | 100000 | 40000  | 25000  | 15000  | 0
+| D: Recherche sur un nouveau produit                        | 35000  | 15000  | 15000  | 15000  | 15000
+|| Fonds disponibles (euros) |                                        | 80000  | 65000  | 47000  | 25000
+
+
+
++ L’analyste financier vous demande de lui déterminer les projets qui maximisent la valeur actuelle nette totale tout en respectant les contraintes de fonds disponibles. 
+Il aimerait connaître cette solution en supposant que les projets sont divisibles.
+Formuler le programme linéaire qui correspond à cette situation (identification des variables, fonction économique et contraintes).
++ Déterminer la solution optimale du programme linéaire à l'aide de lp-solve.
++ Interpréter cette solution pour l’analyste financier en supposant qu’on peut entreprendre qu’une partie de certains projets. Quelle est la valeur actuelle nette du programme d’investissement ?
++ L’analyste financier vous demande de lui fournir également la solution entière optimale en ajoutant toutefois la restriction suivante :
+on envisage d’investir dans un nouvel équipement si on investit d'abord dans la recherche sur le nouveau produit.
+   + Expliquer comment cette restriction se formule dans le programme linéaire.
+   + Résoudre le programme linéaire en tenant compte de la restriction.
+   + Quels sont les projets qui doivent être acceptés et ceux qui sont refusés ? Indiquer également la valeur actualisée nette maximale que l’on obtient.
+
+
+   + Lire le [corrigé corrige.xhtml] de l'exercice. Regarder la syntaxe du fichier ``corrige.t2t``
+disponible dans l'archive (Il vous sera demandé de rendre un tel fichier lors du TP noté).
+
+
+= Exercice 3: Plan de production =
+
+Une entreprise fabrique trois produits A, B et C. Chaque produit nécessite des matières premières et de la main-d’œuvre. Les quantités de matières premières et de main-d’œuvre nécessaires par unité de chaque produit sont données ci-dessous (données par semaine) :
+
+|| Produit | Matières premières (kg) | Main d'oeuvre (h) | profit net (euros) |
+| A | 4 | 2 | 6
+| B | 2 | .5 | 2
+| C | 1 | 3 | 4
+|| Disponibilité | 6000 | 4000 
+
+
+A cause de la capacité limitée d’entreposage, on ne peut pas fabriquer plus de 2500 unités des produits A, B et C au total. L’entreprise doit décider combien d’unités de chaque produit peut-elle fabriquer chaque semaine afin de maximiser le profit.
+
+  + Montrer que ce problème peut être modélisé comme suit :
+  
+```
+Max	6x1 + 2x2 + 4x3
+s.c.	4x1 + 2x2 + x3 <= 6000
+		2x1 + 0.5x2 + 3x3 <= 4000
+		x1 + x2 + x3 <= 2500
+		x1, x2, x3 >= 0
+```
+
+  + Décrire le plan de production optimal.
+  + Déterminer les coûts marginaux (prix fictifs) d’une part de chacune des ressources et d’autre part de chacun des produits.
+  + Quel sera l’effet sur le profit total d’une diminution de 500 de la capacité d’entreposage ?
+  + L’entreprise ne fabrique pas le produit B. L’une des raisons de cette situation est que le profit unitaire du produit B est trop faible. Quel est le profit unitaire minimal nécessaire pour envisager la fabrication du produit B ? Si ce niveau est atteint, quelle sera le nouveau plan de production optimal ?
+  
+  
