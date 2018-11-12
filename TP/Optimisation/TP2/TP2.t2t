@@ -1,0 +1,117 @@
+TP2
+
+Optimisation Combinatoire
+
+%!encoding: UTF-8
+
+= lp_solve sous windows =
+
+Pour utiliser lp_solve sous Windows, il faut télécharger le binaire à
+l'adresse suivante:
+
+[version 32 bits http://sourceforge.net/projects/lpsolve/files/lpsolve/5.5.2.0/lp_solve_5.5.2.0_exe_win32.zip/download]
+
+
+
+= Exercice 1: Plan de production =
+
+**Ce premier exercice est structuré comme le TP noté**.
+
+
+Pour chaque question, il est demandé de donner 
+  + La réponse technique: commande lp_solve lancée, le contenu du fichier .lp etc
+  + Une réponse métier: Texte en français répondant à la question ou
+  interprétant les résultats de l'optimisation
+  
+Les réponses doivent être rédigées dans le fichier ``fichereponse.t2t`` fourni.
+On pourra se reporter au fichier ``fichecorrige.t2t`` pour une réponse possible.
+
+
+Les fichiers nécessaires sont [ici TP2.zip].
+
+
+Une entreprise fabrique trois produits A, B et C. Chaque produit nécessite des matières premières et de la main-d’œuvre. Les quantités de matières premières et de main-d’œuvre nécessaires par unité de chaque produit sont données ci-dessous (données par semaine) :
+
+|| Produit | Matières premières (kg) | Main d'oeuvre (h) | profit net (euros) |
+| A | 4 | 2 | 6
+| B | 2 | .5 | 2
+| C | 1 | 3 | 4
+|| Disponibilité | 6000 | 4000 
+
+
+A cause de la capacité limitée d’entreposage, on ne peut pas fabriquer plus de 2500 unités des produits A, B et C au total. L’entreprise doit décider combien d’unités de chaque produit peut-elle fabriquer chaque semaine afin de maximiser le profit.
+
+  + Montrer que ce problème peut être modélisé comme suit :
+  
+```
+Max	6x1 + 2x2 + 4x3
+s.c.	4x1 + 2x2 + x3 <= 6000
+		2x1 + 0.5x2 + 3x3 <= 4000
+		x1 + x2 + x3 <= 2500
+		x1, x2, x3 >= 0
+```
+  
+  + Décrire le plan de production optimal.
+  + Déterminer les coûts marginaux (prix fictifs) de chacune des ressources.
+  + Quel sera l’effet sur le profit total d’une diminution de 500 de la capacité d’entreposage ?
+  + L’entreprise ne fabrique pas le produit B. L’une des raisons de cette situation est que le profit unitaire du produit B est trop faible. Quel est le profit unitaire minimal nécessaire pour envisager la fabrication du produit B ? Si ce niveau est atteint, quelle sera le nouveau plan de production optimal ?
+  
+  
+= Exercice 2: Gestion de portefeuille financier = 
+
+Cette catégorie d'applications est connue sous le titre anglais de //portfolio selection//.
+
+Un conseiller financier doit choisir pour ses clients (un club
+d'investissement) un certain nombre d'actions dans lesquelles
+investir. Ses clients souhaitent investir 100 000 Euros dans 6 actions
+différentes. Le conseiller leur indique le retour sur investissement
+(taux de retour) qu'ils peuvent espérer pour une période de six mois.
+Le tableau suivant donne pour chaque action son nom, sa catégorie (T :
+Technologique, N : Non technologique) et le taux de retour espéré.
+
+|| N | Nom (Pays) | Catégorie | Retour |
+| 1 | Dash-Associates (UK) | T | 5.3% 
+| 2 | Ilog France (F) | T | 6.2%
+| 3 | Orange (F) | T | 5.1%
+| 4 | General Motors (USA) | N | 4.9%
+| 5 | Total(F) | N | 6.5%
+| 6 | BNP (F) | N | 3.4%
+
+
+Les clients fixent certaines conditions au conseiller.
+Ils veulent investir au moins la moitié de leur capital dans des actions françaises (F) et au plus 30% dans des valeurs technologiques (T).
+Afin d’éviter le phénomène « d’embonpoint », aucune action ne peut peser plus de 40% et aucune ne peut représenter moins de à 5%.
+Le conseiller doit déterminer comment répartir le capital entre chaque
+action pour espérer le meilleur retour sur investissement.
+
+  + Construire un modèle approprié type programme linéaire : (1) définir les variables de décision, (2) exprimer les contraintes, et (3) l’objectif optimiser.
+  + Déterminer la composition du portefeuille optimal et le rendement espéré.
+  + Réaliser une analyse post-optimale de cette solution.
+  
+  
+= Exercice 3 = 
+
+Une société envisage l'ajout d'un nouveau produit à la gamme de ceux
+qu'elle fabrique actuellement. Deux modèles du nouveau produit ont
+été analysés et testés. Le modèle standard peut se fabriquer dans l'un
+ou l'autre des trois ateliers (A, B et C) dont dispose la société ;
+chaque unité de ce modèle requiert en main-d’œuvre soit 5 heures dans
+l'atelier A, soit 4 heures dans B, soit 5 heures dans C. Quant à
+l'autre modèle considéré, dit modèle de luxe, l'atelier A ne dispose
+pas de l'équipement nécessaire et sa fabrication devra être confiée
+aux ateliers B et C ; enfin, une unité de ce modèle de luxe requiert
+en main-d’œuvre 5 heures dans l'atelier B ou 8 heures dans C.
+
+On peut rendre disponibles pour la fabrication de l'un ou l'autre des modèles de ce produit 2000 heures dans l'atelier A, 8000 heures dans B et 4000 heures dans C. Le salaire horaire versé aux ouvriers est de 11.50 euros dans l'atelier A, de 13 euros dans B et de 12 euros dans C. Le coût des matériaux et les autres dépenses directement liées à la fabrication de cet article sont évalués à 10 euros pour l'unité du modèle standard et à 15 euros pour l'unité du modèle de luxe.
+
+L'entreprise se propose de vendre le modèle standard 135 euros l'unité
+et le modèle de luxe 145 euros l'unité. Le service du marketing estime
+qu'on ne peut espérer vendre plus de 2500 unités du modèle standard ni plus de 1000 unités du modèle de luxe.
+
+  + Modéliser ce problème de lancement de ce nouveau produit sous forme d’un programme linéaire.
+  + Déterminer le plan de production optimal.
+  + Donner les coûts réduits.
+  + Quel est l'atelier dans lequel une variation d'une heure dans le temps disponible aurait la plus grande répercussion sur les profits ?
+  + Quel est le premier produit dont le service de marketing devrait essayer de promouvoir la demande ?
+  + Quelle devrait être l'augmentation minimale du prix de vente du modèle de luxe pour que l'entreprise ait intérêt à en augmenter la production ?
+

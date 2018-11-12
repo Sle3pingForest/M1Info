@@ -1,0 +1,75 @@
+TP2
+
+Optimisation Combinatoire - Fiche réponse
+
+%!encoding: UTF-8
+
+Pour mieux préparer au TP noté de la semaine prochaine, ce TP utilise
+le même format.
+
+= Exercice 1: Plan de production =
+
+Une entreprise fabrique trois produits A, B et C. Chaque produit nécessite des matières premières et de la main-d’œuvre. Les quantités de matières premières et de main-d’œuvre nécessaires par unité de chaque produit sont données ci-dessous (données par semaine) :
+
+|| Produit | Matières premières (kg) | Main d'oeuvre (h) | profit net (euros) |
+| A | 4 | 2 | 6
+| B | 2 | .5 | 2
+| C | 1 | 3 | 4
+|| Disponibilité | 6000 | 4000 
+
+
+A cause de la capacité limitée d’entreposage, on ne peut pas fabriquer plus de 2500 unités des produits A, B et C au total. L’entreprise doit décider combien d’unités de chaque produit peut-elle fabriquer chaque semaine afin de maximiser le profit.
+
+ + Montrer que ce problème peut être modélisé comme suit :
+  
+```
+Max	6x1 + 2x2 + 4x3
+s.c.	4x1 + 2x2 + x3 <= 6000
+		2x1 + 0.5x2 + 3x3 <= 4000
+		x1 + x2 + x3 <= 2500
+		x1, x2, x3 >= 0
+```
+  - Réponse métier:
+  
+  blablabla
+  
+  - Fichier .lp
+```  
+TODO
+```
+ + Décrire le plan de production optimal.
+  - Commandes lp_solve et résultat lp_solve:
+```
+TODO
+```
+  
+  - Réponse métier:
+  
+blablabla
+
+ + Déterminer les coûts marginaux (prix fictifs) de chacune des ressources.
+  - Commandes lp_solve et résultat lp_solve:
+```  
+TODO
+```
+  - Réponse métier:
+  
+  blabla
+  
+ + Quel sera l’effet sur le profit total d’une diminution de 500 de la capacité d’entreposage ?
+  - Commandes lp_solve et résultat lp_solve:
+```  
+TODO
+```
+  - Réponse métier
+  
+blablabl
+
+ + L’entreprise ne fabrique pas le produit B. L’une des raisons de cette situation est que le profit unitaire du produit B est trop faible. Quel est le profit unitaire minimal nécessaire pour envisager la fabrication du produit B ? Si ce niveau est atteint, quelle sera le nouveau plan de production optimal ?
+  - Commandes lp_solve et résultat lp_solve:
+```  
+TODO
+```
+  - Réponse métier:
+  
+blabla

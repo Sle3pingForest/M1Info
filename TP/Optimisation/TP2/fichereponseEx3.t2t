@@ -1,0 +1,40 @@
+TP2
+
+Optimisation Combinatoire - Fiche réponse
+
+%!encoding: UTF-8
+
+Pour mieux préparer au TP noté de la semaine prochaine, ce TP utilise
+le même format.
+
+= Exercice 3 =
+
+produit : x1A 
+	  x1B 
+	  x2B 
+	  x1C 
+	  x2C
+
+
+|| Areliers  |  Cout Main d'oeuvre (h)  | Total H 	     | 
+| A 	     | 11.50 		 	| 2000		     | 
+| B          | 13 		 	| 8000	 	     | 
+| C          | 12 		 	| 4000		     | 
+
+
+
+max:	125x1A + 125x1B +125x1C + 130x2B +130x2C - 57.5x1A -52x1B -65x2B - 60x1C -96x2C;
+sc:	5x1A <=2000;
+	4x1B + 5x2B <= 8000;
+	5x1C + 8 x2C <= 4000;
+	x1A + x1B + x1C <=2500;
+	x2B + x2C <= 1000;
+	
+Value of objective function: 210300
+
+Actual values of the variables:
+x1A                           400
+x1B                          1300
+x1C                           800
+x2B                           560
+x2C                             0

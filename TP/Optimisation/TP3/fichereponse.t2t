@@ -1,0 +1,144 @@
+TP noté
+
+Optimisation Combinatoire
+
+%!encoding: UTF-8
+
+= Exercice 1: Compagnie Pharmaceutique =
+
+
+Pour chaque question, il est demandé de donner 
+  + La réponse technique: commande lp_solve lancée, le contenu du fichier .lp etc
+  + Une réponse métier: Texte en français répondant à la question ou
+  interprétant les résultats de l'optimisation
+  
+Les réponses doivent être rédigées dans le fichier ``fichereponse.t2t`` fourni.
+
+Les fichiers nécessaires sont [ici TP3.zip].
+
+
+Une entreprise pharmaceutique fabrique deux produits A, B.
+Ces produits utilise 3 molecules differentes, qu'on note ici H,P et M.
+
+Les quantites de matieres premieres necessaires par boite sont
+indiquees dans la table suivante.
+
+|| Produit | H (g) | P (g) | M (g) | benefice (euros) |
+| A | 2.5 | 0.125 | 17.5 | 6.5
+| B | 7.5 | 0.125 | 10 | 11.5
+|| Disponibilité | 2404  | 51  | 5950 
+
+ + Montrer que ce problème peut être modélisé comme suit :
+  
+```
+Max	6.5x1 + 11.5 x2
+s.c.	2.5x1 + 7.5x2 <= 2404
+		0.125x1 + 0.125x2  <= 51
+		17.5x1 + 10x2  <= 5950
+		x1, x2 >= 0
+		x1, x2 entiers
+```
+  - Réponse métier:
+  
+  blablabla
+  
+  - Fichier .lp
+```  
+TODO
+```
+ + Décrire le plan de production optimal.
+  - Commandes lp_solve et résultat lp_solve:
+```  
+TODO
+```
+  - Réponse métier:
+  
+  blabla
+ 
+ + Décrire le plan de production optimal dans l'hypothèse où x1 et
+x2 sont réels. Comparer les deux plans de production.
+
+Dans la suite de l'exercice, on suppose que x1 et x2 sont reels.
+  - Commandes lp_solve et résultat lp_solve:
+```  
+TODO
+```
+  - Réponse métier:
+  
+  blabla
+ + Déterminer les coûts marginaux (prix fictifs) de chacune des
+ressources
+  - Commandes lp_solve et résultat lp_solve:
+```  
+TODO
+```
+  - Réponse métier:
+  
+  blabla
+ + Déterminer la ou les ressources critiques
+  - Commandes lp_solve et résultat lp_solve:
+```  
+TODO
+```
+  - Réponse métier:
+  
+  blabla
+ + Quel serait l'impact sur les benefices si le stock disponible de M
+est seulement de 5750g ?
+  - Commandes lp_solve et résultat lp_solve:
+```  
+TODO
+```
+  - Réponse métier:
+  
+  blabla
+ + Proposer une analyse de sensibilité pour les deux coefficients de l' objectif et les trois coefficients des seconds membres des contraintes
+  - Commandes lp_solve et résultat lp_solve:
+```  
+TODO
+```
+  - Réponse métier:
+  
+  blabla.
+ + Parmi les trois molecules, quelle est celle dont il serait
+le plus interessant d'avoir 1g supplementaire ? 
+  - Commandes lp_solve et résultat lp_solve:
+```  
+TODO
+```
+  - Réponse métier:
+  
+  blabla
+ + La compagnie pharmaceutique decide d'acheter jusqu'à 250g de H en plus,
+chez un autre fabricant, qui vend le gramme 20 centimes que
+leur producteur habituel. (En particulier, le benefice sur le produit
+A n'est plus que de 6.5 - 2.5*0.2 = 6 euros, et le benefice sur le
+produit B n'est plus que de 11.5 - 7.5*0.2 = 10 euros, si on utilise
+ces nouvelles molecules).  Montrer que ce nouveau problème peut être
+modélisé comme suit:
+
+```
+Max	6.5x1 + 11.5 x2 + 6x3 + 10x4
+s.c.	2.5x1 + 7.5x2 <= 2404
+        2.5x3 + 7.5x4 <= 250
+		0.125x1 + 0.125x2 +0.125x3 + 0.125x4  <= 51
+		17.5x1 + 10x2 + 17.5x3 + 10x4 <= 5950
+		x1, x2,x3,x4 >= 0
+```
+  - Réponse métier:
+  
+  blablabla
+  
+  - Fichier .lp
+```  
+TODO
+```
+
+ + Décrire le nouveau plan de production optimal.
+  - Commandes lp_solve et résultat lp_solve:
+```  
+TODO
+```
+  - Réponse métier:
+  
+  blabla
