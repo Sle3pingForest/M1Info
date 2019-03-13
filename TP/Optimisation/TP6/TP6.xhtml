@@ -1,0 +1,247 @@
+<?xml version="1.0"
+      encoding="UTF-8"
+?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>TP noté</title>
+<meta name="generator" content="http://txt2tags.org" />
+<link rel="stylesheet" type="text/css" href="site.css" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+</head>
+<body>
+
+<div class="header" id="header">
+<h1>TP noté</h1>
+<h3>Optimisation Combinatoire</h3>
+</div>
+
+<div class="body" id="body">
+
+<h1>Consignes</h1>
+
+<p>
+Le TP noté dure 1h15. Le travail doit être effectué seul. 
+Il est possible de récupérer des fichiers venant
+des TPs précédents. L'usage d'internet est restreint arche, ainsi qu'aux sites mentionnés dans le sujet.
+</p>
+<p>
+Les réponses aux questions doivent être effectuées dans le fichier <code>fichereponse.t2t</code> fourni.
+C'est le seul fichier qui doit être rendu sur arche.
+</p>
+<p>
+Pour chaque question, il est demandé de donner
+</p>
+
+  <ol>
+  <li>La réponse technique: commande lp_solve lancée, le contenu du fichier .lp etc
+  </li>
+  <li>Une réponse métier: Texte en français répondant à la question ou
+  interprétant les résultats de l'optimisation
+  </li>
+  </ol>
+
+<p>
+Le rendu du TP noté doit se faire sur <a href="http://arche.univ-lorraine.fr/mod/assign/view.php?id=320077">arche</a>
+</p>
+<p>
+Les fichiers nécessaires à la résolution des questions sont <a href="TP6.zip">ici</a>.
+</p>
+<p>
+<b>Tout non-respect des consignes sera sanctionné. En particulier, si le travail n'a pas été effectué seul,  une pénalité d'un minimum de 20 points sera appliquée.</b>
+</p>
+
+<h1>Le problème</h1>
+
+<p>
+L'association Noël des Hôpitaux organise comme chaque année une journée de ventes de produits alimentaires devant l'amphi 13.
+</p>
+<p>
+L'association dispose de pommes, de sucre, de farine et de beurre et décide de vendre des chaussons aux pommes, des parts de crumbles aux pommes, et des partes de tartes aux pommes.
+</p>
+<p>
+Plus exactement, elle dispose de:
+</p>
+
+<ul>
+<li>15 kg de pommes
+</li>
+<li>9 kg de farine
+</li>
+<li>500g de sucre
+</li>
+<li>7kg de beurre
+<p></p>
+Le chausson aux pommes, la part de tarte, et la parte de crumble sont tous trois vendus 50 centimes.
+L'association cherche principalement à maximiser son profit.
+</li>
+</ul>
+
+<h1>Recettes</h1>
+
+<p>
+Les recettes suivantes ne prennent pas en compte l'eau nécessaire à la confection des différentes pâtes.
+</p>
+
+<h3>Tarte aux pommes (pour 6 parts)</h3>
+
+ <ul>
+ <li>1 pate feuilletée
+ </li>
+ <li>390g de pommes
+ </li>
+ </ul>
+
+<h3>Chausson aux pommes (pour 8 chaussons aux pommes)</h3>
+
+  <ul>
+  <li>1 pate feuilletée
+  </li>
+  <li>500g de compote de pommes
+  </li>
+  </ul>
+
+<h3>Crumble aux pommes (pour 6 parts)</h3>
+
+  <ul>
+  <li>90g de farine
+  </li>
+  <li>90g de sucre
+  </li>
+  <li>90g de beurre
+  </li>
+  <li>300g de compote de pommes
+  </li>
+  </ul>
+
+<h3>Compote de pommes (pour 1 kg)</h3>
+
+  <ul>
+  <li>960g de pommes
+  </li>
+  <li>40g de sucre
+  </li>
+  </ul>
+
+<h3>Pâte feuilletée (pour 1 pâte)</h3>
+
+  <ul>
+  <li>240g de farine
+  </li>
+  <li>204g de beurre
+  </li>
+  </ul>
+
+<h1>Première partie</h1>
+
+  <ol>
+  <li>On propose deux modélisations différentes du problème.
+La première (modele.lp):
+<pre>
+max: .5 x1 + .5 x2 + .5x3;
+a: 40x1 + 30x2 + 15x3  &lt; 9000;
+b: 34x1 + 25.5x2 + 15x3 &lt;  7000;
+c:          2.5x2  + 17 x3   &lt; 500;
+d: 65x1 + 60x2 + 48x3 &lt; 15000;
+int x1,x2,x3;
+</pre>
+
+  <p></p>
+La deuxième (modele2.lp):
+<pre>
+max: 3  x1 + 4 x2 + 3x3;
+a: 240x1 + 240x2 + 90x3  &lt; 9000;
+b: 204x1 + 204x2 + 90x3 &lt;  7000;
+c:          20x2  + 102 x3   &lt; 500;
+d: 390x1 + 480x2 + 288x3 &lt; 15000;
+int x1,x2,x3;
+</pre>
+
+  <p></p>
+Expliquer les deux modélisations. En particulier, précisez à quoi correspond chacune des variables et des contraintes. On expliquera en détail les coefficients de la troisième contrainte.
+  <p></p>
+  </li>
+  <li>Décrire le plan de production optimal pour les deux modélisations. Expliquer d'où proviennent les différences.
+  <p></p>
+Dans toute la suite, on se concentre sur la première modélisation (modele.lp).
+  <p></p>
+  </li>
+  <li>Renommer les variables et les labels (<code>a:</code>,<code>b:</code>,<code>c:</code>) du
+fichier .lp pour avoir des noms plus significatifs. Ces nouveaux noms
+devront être utilisés dans toute la suite.
+  <p></p>
+  </li>
+  <li>Décrire le plan de production optimal dans l'hypothèse où x1,  x2,x3 sont réels. Comparer brièvement les deux plans de production.
+  <p></p>
+Dans la suite de l'exercice, on suppose que x1, x2 et x3 sont réels.
+  <p></p>
+  </li>
+  <li>L'une des trois pâtisseries n'est actuellement pas produite. Laquelle ?  A quel prix minimum doit-on la vendre pour qu'il soit intéressant d'en produire ?
+  <p></p>
+On suppose dans toute la suite que le prix de la part de crumble est désormais de 1 euro.
+  <p></p>
+  </li>
+  <li>Décrire le nouveau plan de production optimal, d'abord avec des variables entières puis avec des variables réelles.
+  </li>
+  <li>Déterminer les coûts marginaux (prix fictifs) de chacune des
+ressources
+  </li>
+  <li>Déterminer la ou les ressources critiques
+  </li>
+  <li>Proposer une analyse de sensibilité pour les trois coefficients de
+l' objectif et les quatre coefficients des seconds membres des contraintes.
+  </li>
+  </ol>
+
+<h2>Partie 2</h2>
+
+<p>
+Toutes les questions de cette partie sont indépendantes, à l'exception des deux dernières
+</p>
+
+  <ol>
+  <li>Un stand concurrent vend des crêpes, ce qui nécessite également de la farine, et un peu de sucre.
+   Est-il intéressant d'acheter à leur stand du sucre et de la farine ? Si oui, à quel prix (au kg) ? Quelle quantité au maximum ?
+  <p></p>
+  </li>
+  <li>Les 15 kg de pommes se répartissent en deux variétés: 10 kg de Fuji et 5 kg de Golden. Les Fuji ne sont pas adaptées à la création de tarte, et peuvent donc être uniquement utilisées pour la conception de compote. Donner la nouvelle solution optimale en tenant compte de cette contrainte.
+  <p></p>
+  </li>
+  <li>On peut remplacer la pâte feuilletée par une pâte brisée dans la conception de la tarte. Sachant qu'une pâte brisée s'obtient à partir de 200g de farine et 100g de beurre, donner la nouvelle solution optimale.
+  <p></p>
+  </li>
+  <li>On décide maintenant de faire également des tartes tatin (pour 6 personnes), qui se font avec 800g de pommes, 100g sucre  et 20g beurre et une pâte brisée (voir la question précédente pour la recette de la pâte brisée). A quel prix doit-on la vendre pour qu'il soit intéressant d'en faire ?
+  <p></p>
+  </li>
+  <li>Dans cette question, et <b>uniquement</b> dans cette question, on s'intéresse à une troisième modélisation du problème, présentée  dans le fichier <code>modele3.lp</code>, inspirée de la modélisation du fichier <code>modele2.lp</code>:
+
+<pre>
+max: 3  x1 + 4 x2 + 3x3;
+a: 240x5 + 90x3  &lt; 9000;
+b: 204x5 + 90x3 &lt;  7000;
+c: 90x3 + 40x4   &lt; 500;
+d: 390x1 + 960x4 &lt; 15000;
+e: .5x2 + .3 x3 &lt;= x4;
+f: x1 + x2 &lt;= x5;
+int x1,x2,x3,x5;
+</pre>
+
+  <p></p>
+Expliquer cette modélisation, en particulier les variables et contraintes. On expliquera en particulier (a) pourquoi toutes les variables à l'exception de x4 sont entières (b) ce qui a changé dans les trois premières contraintes et ce que représente les deux dernières.
+  <p></p>
+  </li>
+  <li>Quelle est le plan de production optimal, si on cherche à produire au moins 20% de tarte, 20% de chaussons et 20% de crumble ?
+  <p></p>
+  </li>
+  <li>Après le succès de l'opération cette année, l'association compte faire encore mieux l'année prochaine.
+Sachant que le kg de pommes est à 2.5 euros, le kg de farine à 0.7 euros, les 500g de sucre à 50 centimes, et les 250g de beurre à 1.5euros, expliquer comment elle peut gagner plus d'argent l'année prochaine en utilisant le même budget. (On suppose dans cette question que le sucre s'achète par paquet de 500g, le beurre par plaquette de 250g, la farine par paquet d'un kg et la pomme par paquet d'un kg).
+  <p></p>
+  </li>
+  <li>Montrer que, si on peut acheter sucre, beurre, farine et pomme à l'unité plutôt qu'en paquet, alors la solution à la question précédente est évidente et ne nécessite pas l'utilisation de lp_solve ou de l'algorithme du simplexe.
+  </li>
+  </ol>
+
+</div>
+<!-- xhtml code generated by txt2tags 2.6 (http://txt2tags.org) -->
+<!-- cmdline: txt2tags -\-config=/home/ejeandel/Travail/ejeandel/Web/config.t2t -\-style=site.css -\-css-sugar -t xhtml TP6.t2t -->
+</body></html>

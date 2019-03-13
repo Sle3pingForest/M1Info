@@ -1,0 +1,373 @@
+TP noté
+
+Optimisation Combinatoire
+
+%!encoding: UTF-8
+
+
+= Consignes =
+
+Le TP noté dure 1h15. Le travail doit être effectué seul. 
+Il est possible de récupérer des fichiers venant
+des TPs précédents. L'usage d'internet est restreint arche, ainsi qu'aux sites mentionnés dans le sujet.
+
+Les réponses aux questions doivent être effectuées dans le fichier ``fichereponse.t2t`` fourni.
+C'est le seul fichier qui doit être rendu sur arche.
+
+Pour chaque question, il est demandé de donner
+  + La réponse technique: commande lp_solve lancée, le contenu du fichier .lp etc
+  + Une réponse métier: Texte en français répondant à la question ou
+  interprétant les résultats de l'optimisation
+
+
+Le rendu du TP noté doit se faire sur [arche http://arche.univ-lorraine.fr/mod/assign/view.php?id=320077]
+
+Les fichiers nécessaires à la résolution des questions sont [ici TP5.zip].
+
+
+**Tout non-respect des consignes sera sanctionné. En particulier, si le travail n'a pas été effectué seul,  une pénalité d'un minimum de 20 points sera appliquée.**
+
+
+= Le problème = 
+
+L'association Noël des Hôpitaux organise comme chaque année une journée de ventes de produits alimentaires devant l'amphi 13.
+
+L'association dispose de pommes, de sucre, de farine et de beurre et décide de vendre des chaussons aux pommes, des parts de crumbles aux pommes, et des partes de tartes aux pommes.
+
+
+Plus exactement, elle dispose de:
+- 15 kg de pommes
+- 9 kg de farine
+- 500g de sucre
+- 7kg de beurre
+
+Le chausson aux pommes, la part de tarte, et la parte de crumble sont tous trois vendus 50 centimes.
+L'association cherche principalement à maximiser son profit.
+
+
+= Recettes =
+
+Les recettes suivantes ne prennent pas en compte l'eau nécessaire à la confection des différentes pâtes.
+
+
+=== Tarte aux pommes (pour 6 parts) ===
+ - 1 pate feuilletée
+ - 390g de pommes
+
+
+=== Chausson aux pommes (pour 8 chaussons aux pommes) === 
+  - 1 pate feuilletée
+  - 500g de compote de pommes
+
+
+=== Crumble aux pommes (pour 6 parts) ===
+  - 90g de farine
+  - 90g de sucre
+  - 90g de beurre
+  - 300g de compote de pommes
+
+
+=== Compote de pommes (pour 1 kg) === 
+  - 960g de pommes
+  - 40g de sucre
+
+
+=== Pâte feuilletée (pour 1 pâte) ===
+  - 240g de farine
+  - 204g de beurre
+
+
+= Première partie =
+
+
+  + On propose deux modélisations différentes du problème.
+La première (modele.lp):
+```
+max: .5 x1 + .5 x2 + .5x3;
+a: 40x1 + 30x2 + 15x3  < 9000;
+b: 34x1 + 25.5x2 + 15x3 <  7000;
+c:          2.5x2  + 17 x3   < 500;
+d: 65x1 + 60x2 + 48x3 < 15000;
+int x1,x2,x3;
+```
+
+La deuxième (modele2.lp):
+```
+max: 3  x1 + 4 x2 + 3x3;
+a: 240x1 + 240x2 + 90x3  < 9000;
+b: 204x1 + 204x2 + 90x3 <  7000;
+c:          20x2  + 102 x3   < 500;
+d: 390x1 + 480x2 + 288x3 < 15000;
+int x1,x2,x3;
+```
+
+Expliquer les deux modélisations. En particulier, précisez à quoi correspond chacune des variables et des contraintes. On expliquera en détail les coefficients de la troisième contrainte.
+
+    - réponse métier: 
+      Dans le première modele, le but est de maximiser le profit vendu par unite/part. avec 
+
+      
+      x1 la quantite de tarte au pomme vendu par part
+      x2 la quantite de chausson au pomme vendu par unit
+      x3 la quantite de la part de cramble vendu part part.
+      
+      
+      a la poids en gramme de farine au total pour produit les trois produits.
+      b la poids en gramme de beurre au total pour produit les trois produits.
+      c la poind en gramme de sucre autotal pour produit les trois produit.
+      d la poids en gramme de pomme au total pour produit les trois produits.
+      
+      
+      
+      Dans le deuxieme modele, le but est de maximiser le profit vendu par lot. avec 
+      x1 la quantite de tarte au pomme vendu par pack de 6 part
+      x2 la quantite de chausson au pomme vendu par pack de 8 unités
+      x3 la quantite de la part de cramble vendu par pack de 6 part.
+      
+      a la poids en gramme de farine au total pour produit un lot.
+      b la poids en gramme de beurre au total pour produit un lot.
+      c la poind en gramme de sucre autotal pour produit un lot.
+      d la poids en gramme de pomme au total pour produit un lot
+  + Décrire le plan de production optimal pour les deux modélisations. Expliquer d'où proviennent les différences.
+
+  
+    - Commandes lp_solve et résultat lp_solve:
+```
+lp_solve modele.lp 
+lp_solve modele2.lp 
+
+```
+    - Réponse métier:
+      
+    pour le modele 1: 
+      il faut produit 47 part de tarte au pomme, 199 chausson au pomme, 0 cramble au pomme
+    pour le modele 2:
+      il faut produit 10*6 part de tarte au pomme, 23 *8 chausson au pomme , 0 cramble
+ 
+Dans toute la suite, on se concentre sur la première modélisation (modele.lp).
+
+  + Renommer les variables et les labels (``a:``,``b:``,``c:``) du
+fichier .lp pour avoir des noms plus significatifs. Ces nouveaux noms
+devront être utilisés dans toute la suite.
+
+    - Nouveau fichier lp_solve:
+```     
+   max: .5	x1 + .5 x2 + .5x3;
+    farine: 40x1 + 30x2 + 15x3  < 9000;
+    beurre: 34x1 + 25.5x2 + 15x3 <  7000;
+    sucre:          2.5x2  + 17 x3   < 500;
+    pommes: 65x1 + 60x2 + 48x3 < 15000;
+    int x1,x2,x3;
+```
+
+  + Décrire le plan de production optimal dans l'hypothèse où x1,  x2,x3 sont réels. Comparer brièvement les deux plans de production.
+  
+    - Fichier .lp (si modifié), commandes lp_solve et résultat lp_solve:
+```
+   max: .5	x1 + .5 x2 + .5x3;
+    farine: 40x1 + 30x2 + 15x3  < 9000;
+    beurre: 34x1 + 25.5x2 + 15x3 <  7000;
+    sucre:          2.5x2  + 17 x3   < 500;
+    pommes: 65x1 + 60x2 + 48x3 < 15000;
+    
+    Value of objective function: 123.077
+
+    Actual values of the variables:
+    x1                        46.1538
+    x2                            200
+    x3                              0
+
+```
+    - Réponse métier:
+  au lieu de produit la quantite entier , on produit les parti sumplementaire (46.1538)
+    
+Dans la suite de l'exercice, on suppose que x1, x2 et x3 sont réels.
+  + L'une des trois pâtisseries n'est actuellement pas produite. Laquelle ?  A quel prix minimum doit-on la vendre pour qu'il soit intéressant d'en produire ?
+  
+    - Fichier .lp (si modifié), commandes lp_solve et résultat lp_solve:
+```  max: .5	x1 + .5 x2 + .63x3;
+    farine: 40x1 + 30x2 + 15x3  < 9000;
+    beurre: 34x1 + 25.5x2 + 15x3 <  7000;
+    sucre:          2.5x2  + 17 x3   < 500;
+    pommes: 65x1 + 60x2 + 48x3 < 15000;
+    
+    Value of objective function: 123.179
+
+    Actual values of the variables:
+    x1                        107.407
+    x2                        124.794
+    x3                        11.0597
+
+
+```
+    - Réponse métier:
+
+    si on vendre la part de cramble a 64 cemtime , pour que la production est rentable.
+
+On suppose dans toute la suite que le prix de la part de crumble est désormais de 1 euro.
+  + Décrire le nouveau plan de production optimal, d'abord avec des variables entières puis avec des variables réelles.
+  
+    - Fichier .lp (si modifié), commandes lp_solve et résultat lp_solve:
+```
+variable entier:
+
+  max: .5	x1 + .5 x2 + .5x3;
+    farine: 40x1 + 30x2 + 15x3  < 9000;
+    beurre: 34x1 + 25.5x2 + 15x3 <  7000;
+    sucre:          2.5x2  + 17 x3   < 500;
+    pommes: 65x1 + 60x2 + 48x3 < 15000;
+    int x1,x2,x3;
+    
+    Value of objective function: 123.12
+
+      Actual values of the variables:
+      x1                             91
+      x2                            145
+      x3                              8
+      
+variable reel.   
+
+  max: .5	x1 + .5 x2 + .5x3;
+    farine: 40x1 + 30x2 + 15x3  < 9000;
+    beurre: 34x1 + 25.5x2 + 15x3 <  7000;
+    sucre:          2.5x2  + 17 x3   < 500;
+    pommes: 65x1 + 60x2 + 48x3 < 15000;
+    
+    
+Value of objective function: 123.179
+
+Actual values of the variables:
+x1                        107.407
+x2                        124.794
+x3                        11.0597
+
+```
+    - Réponse métier:
+
+    blablablablabla
+
+  + Déterminer les coûts marginaux (prix fictifs) de chacune des
+ressources
+ 
+    - Fichier .lp (si modifié), commandes lp_solve et résultat lp_solve:
+```
+TODO
+```
+    - Réponse métier:
+
+    blablablablabla
+
+  + Déterminer la ou les ressources critiques
+  
+    - Fichier .lp (si modifié), commandes lp_solve et résultat lp_solve:
+```
+TODO
+```
+    - Réponse métier:
+
+    blablablablabla
+
+  + Proposer une analyse de sensibilité pour les trois coefficients de
+l' objectif et les quatre coefficients des seconds membres des contraintes.
+  
+    - Fichier .lp (si modifié), commandes lp_solve et résultat lp_solve:
+```
+TODO
+```
+    - Réponse métier:
+
+    blablablablabla
+
+
+== Partie 2 ==
+
+
+Toutes les questions de cette partie sont indépendantes.
+
+
+  + Un stand concurrent vend des crêpes, ce qui nécessite également de la farine, et un peu de sucre.
+   Est-il intéressant d'acheter à leur stand du sucre et de la farine ? Si oui, à quel prix (au kg) ? Quelle quantité au maximum ?
+  
+    - Fichier .lp (si modifié), commandes lp_solve et résultat lp_solve:
+```
+TODO
+```
+    - Réponse métier:
+
+    blablablablabla
+
+  + Les 15 kg de pommes se répartissent en deux variétés: 10 kg de Fuji et 5 kg de Golden. Les Fuji ne sont pas adaptées à la création de tarte, et peuvent donc être uniquement utilisées pour la conception de compote. Donner la nouvelle solution optimale en tenant compte de cette contrainte.
+  
+    - Fichier .lp (si modifié), commandes lp_solve et résultat lp_solve:
+```
+TODO
+```
+    - Réponse métier:
+
+    blablablablabla
+
+  + On peut remplacer la pâte feuilletée par une pâte brisée dans la conception de la tarte. Sachant qu'une pâte brisée s'obtient à partir de 200g de farine et 100g de beurre, donner la nouvelle solution optimale.
+  
+    - Fichier .lp (si modifié), commandes lp_solve et résultat lp_solve:
+```
+TODO
+```
+    - Réponse métier:
+
+    blablablablabla
+
+  + On décide maintenant de faire également des tartes tatin (pour 6 personnes), qui se font avec 800g de pommes, 100g sucre  et 20g beurre et une pâte brisée (voir la question précédente pour la recette de la pâte brisée). A quel prix doit-on la vendre pour qu'il soit intéressant d'en faire ?
+  
+    - Fichier .lp (si modifié), commandes lp_solve et résultat lp_solve:
+```
+TODO
+```
+    - Réponse métier:
+
+    blablablablabla
+
+  + Dans cette question, et **uniquement** dans cette question, on s'intéresse à une troisième modélisation du problème, présentée  dans le fichier ``modele3.lp``, inspirée de la modélisation du fichier ``modele2.lp``:
+```
+max: 3  x1 + 4 x2 + 3x3;
+a: 240x5 + 90x3  < 9000;
+b: 204x5 + 90x3 <  7000;
+c: 90x3 + 40x4   < 500;
+d: 390x1 + 960x4 < 15000;
+e: .5x2 + .3 x3 <= x4;
+f: x1 + x2 <= x5;
+int x1,x2,x3,x5;
+```
+
+Expliquer cette modélisation, en particulier les variables et contraintes. On expliquera en particulier (a) pourquoi toutes les variables à l'exception de x4 sont entières (b) ce qui a changé dans les trois premières contraintes et ce que représente les deux dernières.
+
+    - Réponse métier:
+
+    blablablablabla
+    
+  + Quel est le plan de production optimal, si on cherche à produire au moins 20% de tarte, 20% de chaussons et 20% de crumble ?
+ 
+    - Fichier .lp (si modifié), commandes lp_solve et résultat lp_solve:
+```
+TODO
+```
+    - Réponse métier:
+
+    blablablablabla
+
+  + Après le succès de l'opération cette année, l'association compte faire encore mieux l'année prochaine.
+Sachant que le kg de pommes est à 2.5 euros, le kg de farine à 0.7 euros, les 500g de sucre à 50 centimes, et les 250g de beurre à 1.5euros, expliquer comment elle peut gagner plus d'argent l'année prochaine en utilisant le même budget. (On suppose dans cette question que le sucre s'achète par paquet de 500g, le beurre par plaquette de 250g, la farine par paquet d'un kg et la pomme par paquet d'un kg).
+  
+    - Fichier .lp (si modifié), commandes lp_solve et résultat lp_solve:
+```
+TODO
+```
+    - Réponse métier:
+
+    blablablablabla
+
+  + Montrer que, si on peut acheter sucre, beurre, farine et pomme à l'unité plutôt qu'en paquet, alors la solution à la question précédente est évidente et ne nécessite pas l'utilisation de lp_solve ou de l'algorithme du simplexe.
+    - Calcul effectué:
+
+    - Réponse métier:
+
+    blablablablabla

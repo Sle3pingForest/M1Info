@@ -1,0 +1,16 @@
+Q10
+
+Dual values with from - till limits:
+                           Dual value            From            Till
+blanc                               0          -1e+30           1e+30
+noir                                0           190.9           200.5
+bleu                               40          -1e+30           1e+30
+R4                                 14        198.5714        207.8182
+x1                                 -5        19.18182        27.66667
+x2                                  0          -1e+30           1e+30
+x3                                  0          -1e+30           1e+30
+x4                                -34             -78        1.428571
+
+-34 il faut set  a 34x4
+
+max:25 x1 + 26 x2 + 22 x3 +34x ;

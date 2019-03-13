@@ -1,9 +1,2 @@
-Auction Jackiii for sushi Bid= 10
-Auction Jackiii for sushi Bid= 12
-Auction Jackiii for sushi Bid= 45
-Auction Jackiii for sushi Bid= 55
-Auction Jackiii for sushi Bid= 55
-Auction Jackiii for sushi Bid= 80
-Auction nam for jambon Bid= 10
-Auction nam for jambon Bid= 4564
-Auction nam for jambon Bid= 456456456
+Fri Oct 12 15:56:03 CEST 2018: Auction nam for Armure Casque - Bid= 23453
+Fri Oct 12 15:58:54 CEST 2018: Auction nam for Armure Casque - Bid= 200

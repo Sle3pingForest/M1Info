@@ -40,75 +40,122 @@ s.c.	2.5x1 + 7.5x2 <= 2404
 ```
   - Réponse métier:
   
-  blablabla
+ X1 c'est produit A qte fabriquer et vendu;
+ X2 c'est produit B qte fabriquer et vendu;
   
   - Fichier .lp
 ```  
-TODO
+      max:6.5x1 + 11.5x2;
+      sc1:2.5x1 + 7.5x2 <= 2404;
+      sc2:0.125x1 + 0.125x2  <= 51;
+      sc3:17.5x1 + 10x2  <= 5950;
+      x1 >= 0; 
+      x2 >= 0;
+      int x1, x2;
+      //pas de tabulation a la derniere ligne;
 ```
  + Décrire le plan de production optimal.
   - Commandes lp_solve et résultat lp_solve:
 ```  
-TODO
-```
+  lp_solve -s0 -S7 test.lp 
+
   - Réponse métier:
   
-  blabla
- 
+Value of objective function: 4032
+
+Actual values of the variables:
+x1                            132
+x2                            276
+
+il faut produit 132 quantite de produit A et 276 de produit B pour 
+une maiximun de gain de 4032€
+```
+
+
  + Décrire le plan de production optimal dans l'hypothèse où x1 et
 x2 sont réels. Comparer les deux plans de production.
 
 Dans la suite de l'exercice, on suppose que x1 et x2 sont reels.
   - Commandes lp_solve et résultat lp_solve:
+  
 ```  
-TODO
+lp_solve -s0 -S7 test.lp 
 ```
   - Réponse métier:
   
-  blabla
+il faut produit 131.2 quantite de produit A et 276.8 de produit B pour 
+une maiximun de gain de 4036€
+  
  + Déterminer les coûts marginaux (prix fictifs) de chacune des
 ressources
   - Commandes lp_solve et résultat lp_solve:
 ```  
-TODO
+lp_solve -s0 -S7 test.lp 
 ```
   - Réponse métier:
+  Dual values with from - till limits:
+                           Dual value            From            Till
+sc1                                 1        1813.333            3060
+sc2                                32        40.06667        56.21176
+sc3                                 0          -1e+30           1e+30
+x1                                  0          -1e+30           1e+30
+x2                                  0          -1e+30           1e+30
+
   
-  blabla
+  le cout marginal de la resource H est 1 si on modife sa varie de 1
+  le cout marginal de la resource P est 32 si on modifie sa varie de 32
+  
  + Déterminer la ou les ressources critiques
   - Commandes lp_solve et résultat lp_solve:
 ```  
-TODO
+lp_solve -s0 -S7 test.lp 
+  
 ```
   - Réponse métier:
   
-  blabla
+  le cout critiques sont H et P car si on modife M ne change rien
  + Quel serait l'impact sur les benefices si le stock disponible de M
 est seulement de 5750g ?
   - Commandes lp_solve et résultat lp_solve:
 ```  
-TODO
+lp_solve -s0 -S7 test.lp 
 ```
   - Réponse métier:
   
-  blabla
+  le cout marginale de M est null, si on change la disponibilite le gain ne change pas
+  
  + Proposer une analyse de sensibilité pour les deux coefficients de l' objectif et les trois coefficients des seconds membres des contraintes
   - Commandes lp_solve et résultat lp_solve:
 ```  
-TODO
+lp_solve -s0 -S7 test.lp 
+
+Objective function limits:
+                                 From            Till       FromValue
+x1                           3.833333            11.5          -1e+30
+x2                                6.5            19.5          -1e+30
+
+```Objective function limits:
+                                 From            Till       FromValue
+x1                           3.833333            11.5          -1e+30
+x2                                6.5            19.5          -1e+30
+
 ```
   - Réponse métier:
+  tant que les produits reste dans la limite from till, la solution de basse restera la meme
   
-  blabla.
  + Parmi les trois molecules, quelle est celle dont il serait
 le plus interessant d'avoir 1g supplementaire ? 
   - Commandes lp_solve et résultat lp_solve:
 ```  
-TODO
+                           Dual value            From            Till
+H                                   1        1946.667            3060
+P                                  32        40.06667        55.03529
+M                                   0          -1e+30           1e+30
+
 ```
   - Réponse métier:
+  P car , si on ajoute 1 G supplementaire , son coute marginal est de 32
   
-  blabla
  + La compagnie pharmaceutique decide d'acheter jusqu'à 250g de H en plus,
 chez un autre fabricant, qui vend le gramme 20 centimes que
 leur producteur habituel. (En particulier, le benefice sur le produit
@@ -127,18 +174,37 @@ s.c.	2.5x1 + 7.5x2 <= 2404
 ```
   - Réponse métier:
   
-  blablabla
+  X1 et x2 les produit de base
+  X3 et x4 les produit fabriquer en utilisant les molecul acheter
   
   - Fichier .lp
 ```  
-TODO
+Max:6.5x1 + 11.5 x2 + 6x3 + 10x4;
+H:2.5x1 + 7.5x2 <= 2404;
+HSup:2.5x3 + 7.5x4 <= 250;
+P:0.125x1 + 0.125x2 +0.125x3 + 0.125x4  <= 51;
+M:17.5x1 + 10x2 + 17.5x3 + 10x4 <= 5950;
+x1 >=0;
+x2 >= 0;
+x3 >= 0;
+x4 >= 0;
 ```
 
  + Décrire le nouveau plan de production optimal.
   - Commandes lp_solve et résultat lp_solve:
 ```  
-TODO
+lp_solve -s0 -S7 test.lp 
+Value of objective function: 4236
+
+Actual values of the variables:
+x1                              0
+x2                        320.533
+x3                           81.2
+x4                        6.26667
+
 ```
   - Réponse métier:
   
-  blabla
+on doit produit 320.533 avec les P de base, 0 en H, et 81.2 H suplement  6.2 les produit acheter
+  
+ 

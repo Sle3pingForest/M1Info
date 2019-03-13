@@ -1,0 +1,186 @@
+﻿Ly hue nam
+
+
+Partie 1
+
+	question 1
+	
+Minimiser x1 + x2 + x3+ x4 + x5 + x6
+S.C. a: x1 + x2 >= 75
+b: x2 + x3 >= 50
+c: x3 + x4 >= 65
+d: x4 + x5 >= 30
+e: x5 + x6 >= 70
+f: x6 + x1 >= 70
+
+le probleme est de minimiser car , on cherche a affectue le moins de monde possible.
+
+x1,x2,x3,x4,x5,x6 sont le nombre d’agent a affecte pour chaque intervalle horaire  consecutive 1 ,2 ,3 ,4 ,5 ,6 
+
+le sc 
+a : correspondre  a le nombre  d’agent ne dois pas depasser 75 personne pour l’horaire de 10h-14h
+b : correspondre  a le nombre  d’agent ne dois pas depasser 50 personne pour l’horaire de 14h-18h
+c : correspondre  a le nombre  d’agent ne dois pas depasser 65 personne pour l’horaire de 18h-22h
+d : correspondre  a le nombre  d’agent ne dois pas depasser 30 personne pour l’horaire de 22h-2h
+e : correspondre  a le nombre  d’agent ne dois pas depasser 70 personne pour l’horaire de 2h-6h
+f : correspondre  a le nombre  d’agent ne dois pas depasser 70 personnepour l’horaire de 6h-10h
+
+	question 2
+
+min: x1 + x2 + x3+ x4 + x5 + x6;
+p10h14h: x1 + x2 >= 75;
+p14h18h: x2 + x3 >= 50;
+p18h22h: x3 + x4 >= 65;
+p22h2h: x4 + x5 >= 30;
+p2h6h: x5 + x6 >= 70;
+p6h10h: x6 + x1 >= 70;
+
+pX1hX2h => période X1 h a X2 h
+
+	question 3
+
+Value of objective function: 210
+
+Actual values of the variables:
+x1                             75
+x2                              0
+x3                             65
+x4                              0
+x5                             70
+x6                              0
+
+x1 de 6h-10h on doit affecter 75 personnes
+x3 de 14h18h on doit affecter 65 personnes
+x5 de 22h2h on doit affecter 70 personnes
+
+comem c’est des service de 8 h et les intervalle horaire est de 4, c’est normale que les x2,x4,x6 sont null
+
+
+	question 4
+
+min: 1.x1 + 1.x2 + 1.x3+ 1.x4 + 1.x5 + 1.x6;
+p10h14h: x1 + x2 >= 75;
+p14h18h: x2 + x3 >= 50;
+p18h22h: x3 + x4 >= 65;
+p22h2h: x4 + x5 >= 30;
+p2h6h: x5 + x6 >= 70;
+p6h10h: x6 + x1 >= 70;
+
+Value of objective function: 210
+
+Actual values of the variables:
+x1                             75
+x2                              0
+x3                             65
+x4                              0
+x5                             70
+x6                              0
+
+
+l’organisation ne change pas par rapport au premeire modele.
+
+
+	question 5
+
+min: 28x1 + 24x2 + 20x3+ 28x4 + 32x5 + 36x6;
+p10h14h: x1 + x2 >= 75;
+p14h18h: x2 + x3 >= 50;
+p18h22h: x3 + x4 >= 65;
+p22h2h: x4 + x5 >= 30;
+p2h6h: x5 + x6 >= 70;
+p6h10h: x6 + x1 >= 70;
+
+la fonction objectif est :  28x1 + 24x2 + 20x3+ 28x4 + 32x5 + 36x6;
+x1, x2,x3,x4,x5,x6 sont les tranche intervalles 1,2,3,4,5,6 comme dans le tableau
+le coefficient precedent les xi sont les prix payer par entreprise pour chaque aggent dans une intervalle de temps x1 , ici comme intervalle est de 4 h, je prend le cout horaire donne par le tableau et fois 4 h d’ou :
+28,24,20,28,32,36.  
+
+	
+	question 6
+Value of objective function: 5620
+
+Actual values of the variables:
+x1                             70
+x2                              5
+x3                             65
+x4                              0
+x5                             70
+x6                              0
+
+on peut affecter 70 agent pour x1
+on peut affecter 5 agent pour x2
+on peut affecter 65 agent pour x3
+on peut affecter 0 agent pour x4
+on peut affecter 70 agent pour x5
+on peut affecter 0 agent pour x6
+
+et l’entre prise doit payyer 5620 euro autotal
+
+	qustion 7
+
+Dual values with from - till limits:
+                           Dual value            From            Till
+p10h14h                            24              70           1e+30
+p14h18h                             0          -1e+30           1e+30
+p18h22h                            20              45           1e+30
+p22h2h                              0          -1e+30           1e+30
+p2h6h                              32              30           1e+30
+p6h10h                              4               0              75
+x1                                  0          -1e+30           1e+30
+x2                                  0          -1e+30           1e+30
+x3                                  0          -1e+30           1e+30
+x4                                  8             -40              20
+x5                                  0          -1e+30           1e+30
+x6                                  0              -5              40
+
+
+ici , je je fait une augmentation de X4 de 1, cela augmentera l’optimale de 8
+
+si j’augmente de 1 dans p10h14h elle augmente de 24
+augmente p18h22h de 1 elle augmente de 20
+augmente p2h6h de 1 elle augmente de 32
+augmente p6h10h de 1 elle augmente de 4
+ 
+	question 8
+
+si on augmente p2h22h de 1 elle augmente de 32, cette augmentation est superieur au autres, donc elle est critique
+
+
+
+	question9
+
+	
+	question 10
+	min: 26x1 + 22x2 + 24x3+ 30x4 + 34x5 + 32x6;
+	p10h14h: x1 + x2 >= 75;
+	p14h18h: x2 + x3 >= 50;
+	p18h22h: x3 + x4 >= 65;
+	p22h2h: x4 + x5 >= 30;
+	p2h6h: x5 + x6 >= 70;
+	p6h10h: x6 + x1 >= 70;
+
+	
+
+Value of objective function: 5630
+
+Actual values of the variables:
+x1                             30
+x2                             45
+x3                             65
+x4                              0
+x5                             30
+x6                             40
+
+on fait le moyenne des cout sur les deux intervalle du temps travailler et fois 4 sur le nombre horaire
+
+
+
+
+
+
+on peut affecter 30 agent pour x1
+on peut affecter 45 agent pour x2
+on peut affecter 65 agent pour x3
+on peut affecter 0 agent pour x4
+on peut affecter 30 agent pour x5
+on peut affecter 40 agent pour x6

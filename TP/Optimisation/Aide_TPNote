@@ -1,0 +1,35 @@
+Le fichier a executer est un XXX.lp
+La commande pour lancer est lp_solve -s0 -S7 XXX.lp
+
+Bien expliquer comment nommer les variables
+Exemple:	On va utiliser quatre variables, xA, xB, xC, xD associées
+		respectivement aux projets A,B,C et D.
+
+Un programme s'écrit sous la forme suivante:
+  max: 25Marseille + 26Naples + 22Lazio;
+  Production: Marseille + Naples + Lazio <= 200;
+  Blanc: Marseille + 1.1Naples + 1.2Lazio <= 250;
+  Noir: 1.3Naples + 1.1Lazio <= 200;
+  Bleu: 0.4Marseille +0.3Naples + 0.2Lazio <= 50;
+  int Marseille, Naples, Lazio;
+Les variables peuvent aussi etre réelles:
+  0 <= Marseille <= 1;
+  0 <= Naples <= 1;
+  0 <= Lazio <= 1;
+  
+Pour dire qu'une contrainte est prise si une autre est prise:
+  Marseille <= Naples
+  (On peut prendre Marseille que si Naples est deja prise)
+  
+Cout marginal/réduit:
+Dual values with from - till limits:
+                           Dual value            From            Till
+H                                   1        1946.667            3060
+P                                  32        40.06667        55.03529
+M                                   0          -1e+30           1e+30
+A                                   0          -1e+30           1e+30
+B                                   0          -1e+30           1e+30
+Ici il faut lire : Une augmentation de 1 sur P augmentera de 32 l'optimal, on dit que P est critique.
+Tant que l'on reste dans l'intervalle From-Till, la solution va changer mais gardera toujours les mêmes valeurs.
+Si H passe de 2404 à 3000, on aura une autre optimal mais les variables seront toujours A, B et M.
+Si elle passe à 4000, ca va changer une ou plusieurs variables vont sortir et d'autre rentrer.
