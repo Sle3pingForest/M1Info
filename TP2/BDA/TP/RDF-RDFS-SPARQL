@@ -1,0 +1,168 @@
+Exo1:
+
+  Q1)
+  temperature moyenne: meanTemperature
+  Domaine : Planet
+  son co-domaine: Temperature
+  
+  Q2)
+  
+select ?lab ?x where {?x rdf:type dbo:Planet . ?x rdfs:label ?lab . FILTER(regex(?lab,"jup","i")) .  FILTER(lang(fr)} order by ?lab
+
+  Q3)
+  select ?lab ?x where {?x rdf:type dbo:Planet . ?x rdfs:label ?lab . FILTER(regex(?lab,"jup","i")) .  FILTER(lang(?lab) = "fr")} order by ?lab
+  
+  Q4
+  
+ select ?lab ?tempe where {?x rdf:type dbo:Planet . ?x rdfs:label ?lab .  ?x dbo:meanTemperature ?tempe . FILTER(?tempe<300) . FILTER(?tempe>100)}
+ 
+  Q5
+  select ?lab ?tempe where {?x rdf:type dbo:Planet . ?x rdfs:label ?lab .  ?x dbo:meanTemperature ?tempe .FILTER(lang(?lab) = "fr"). FILTER(?tempe<300) . FILTER(?tempe>100)}
+  
+  
+ Exo2
+ 1)
+ PREFIX humans: <http://www.inria.fr/2007/09/11/humans.rdfs#>
+PREFIX inst: <http://www.inria.fr/2007/09/11/humans.rdfs-instances#>
+select ?epouse where { ?epouse humans:hasSpouse inst:Catherine}
+
+2)
+   PREFIX humans: <http://www.inria.fr/2007/09/11/humans.rdfs#>
+PREFIX inst: <http://www.inria.fr/2007/09/11/humans.rdfs-instances#>
+select ?ami where { ?ami humans:hasFriend inst:Alice}
+  
+     PREFIX humans: <http://www.inria.fr/2007/09/11/humans.rdfs#>
+PREFIX inst: <http://www.inria.fr/2007/09/11/humans.rdfs-instances#>
+select ?ami where { inst:Alice humans:hasFriend ?ami }
+  
+ 3) 
+    PREFIX humans: <http://www.inria.fr/2007/09/11/humans.rdfs#>
+PREFIX inst: <http://www.inria.fr/2007/09/11/humans.rdfs-instances#>
+select ?age where { ?x humans:age ?age }
+ 
+ 4)
+    PREFIX humans: <http://www.inria.fr/2007/09/11/humans.rdfs#>
+PREFIX inst: <http://www.inria.fr/2007/09/11/humans.rdfs-instances#>
+select ?x where { ?x humans:age ?age . FILTER(xsd:integer(?age) >20)}
+  
+  5)
+  
+     PREFIX humans: <http://www.inria.fr/2007/09/11/humans.rdfs#>
+PREFIX inst: <http://www.inria.fr/2007/09/11/humans.rdfs-instances#>
+select ?x where { ?x rdf:type humans:Woman}
+  
+  
+  
+  6)
+    
+     PREFIX humans: <http://www.inria.fr/2007/09/11/humans.rdfs#>
+PREFIX inst: <http://www.inria.fr/2007/09/11/humans.rdfs-instances#>
+select ?x ?child where { ?x rdf:type humans:Woman . ?x humans:hasSpouse ?spouse. OPTIONAL{ ?x humans:hasChild ?child}}
+    
+  7) 
+    
+  
+     PREFIX humans: <http://www.inria.fr/2007/09/11/humans.rdfs#>
+PREFIX inst: <http://www.inria.fr/2007/09/11/humans.rdfs-instances#>
+select ?x ?chemise  where { ?x rdf:type humans:Person . OPTIONAL{ ?x humans:name ?nom . ?x humans:shirtsize ?chemise}}
+    
+  8) 
+    
+     PREFIX humans: <http://www.inria.fr/2007/09/11/humans.rdfs#>
+PREFIX inst: <http://www.inria.fr/2007/09/11/humans.rdfs-instances#>
+select ?x ?child  where { {?x humans:hasChild ?child } UNION { ?child humans:hasParent ?x}}
+    
+  9)
+     PREFIX humans: <http://www.inria.fr/2007/09/11/humans.rdfs#>
+PREFIX inst: <http://www.inria.fr/2007/09/11/humans.rdfs-instances#>
+select distinct ?x ?child  where { {?x humans:hasChild ?child } UNION { ?child humans:hasParent ?x}}
+  
+  10)
+      
+     PREFIX humans: <http://www.inria.fr/2007/09/11/humans.rdfs#>
+PREFIX inst: <http://www.inria.fr/2007/09/11/humans.rdfs-instances#>
+select ?x where { ?x rdf:type humans:Man . FILTER NOT EXISTS{ ?x humans:hasChild ?child}}
+  
+  11)
+  
+  PREFIX humans: <http://www.inria.fr/2007/09/11/humans.rdfs#>
+PREFIX inst: <http://www.inria.fr/2007/09/11/humans.rdfs-instances#>
+select ?p1 ?p2 where { ?p1 humans:shirtsize ?x . ?p2 humans:shirtsize ?x . FILTER (?p1 != ?p2)  .FILTER(?p1 < ?p2)}
+
+  12)
+  
+  CONSTRUCT{
+  ?x humans:hasChild ?child. ?x humans:hasParent ?parent}
+  }
+  
+  WHERE{{
+    ?x humans:hasChild ?child} UNION { ?x humans:hasParent ?parent}
+    }
+  
+
+exo 
+6)      
+PREFIX humans: <http://www.inria.fr/2007/09/11/humans.rdfs#>
+PREFIX inst: <http://www.inria.fr/2007/09/11/humans.rdfs-instances#>
+select ?x ?child where { ?x rdf:type humans:Woman . ?x humans:hasSpouse ?spouse. OPTIONAL{ ?x humans:hasChild ?child}}
+    
+9)   
+PREFIX humans: <http://www.inria.fr/2007/09/11/humans.rdfs#>
+PREFIX inst: <http://www.inria.fr/2007/09/11/humans.rdfs-instances#>
+select distinct ?x ?child  where { {?x humans:hasChild ?child } UNION { ?child humans:hasParent ?x}}
+  
+12)
+ CONSTRUCT{
+  ?x humans:hasChild ?child. ?x humans:hasParent ?parent}
+  }
+  
+  WHERE{{
+    ?x humans:hasChild ?child} UNION { ?x humans:hasParent ?parent}
+  }
+  
+
+exo 2 bis
+  
+6) 
+PREFIX sports: <http://www.fil.univ-lille1.fr/~caronc/WS/schema#>
+PREFIX humans: <http://www.inria.fr/2007/09/11/humans.rdfs#>
+PREFIX s-inst: <http://www.fil.univ-lille1.fr/~caronc/WS/data#>
+select ?x where { ?x rdf:type sports:Sport . FILTER NOT EXISTS{ ?x  sports:utiliseMateriel ?mat}}
+  
+9)
+
+
+11)
+  
+  PREFIX sports: <http://www.fil.univ-lille1.fr/~caronc/WS/schema#>
+PREFIX humans: <http://www.inria.fr/2007/09/11/humans.rdfs#>
+PREFIX s-inst: <http://www.fil.univ-lille1.fr/~caronc/WS/data#>
+select ?x ?dure where { ?x rdf:type sports:SportCo  .  OPTIONAL { ?x sports:dureeRencontre ?co . ?x sports:dureeRencontre ?dure}}
+
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  

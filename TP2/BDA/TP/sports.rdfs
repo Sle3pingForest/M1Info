@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE rdf [
+   <!ENTITY spo   "http://www.fil.univ-lille1.fr/~caronc/WS/schema"> 
+   <!ENTITY rdfs  "http://www.w3.org/2000/01/rdf-schema">
+   <!ENTITY rdf   "http://www.w3.org/1999/02/22-rdf-syntax-ns">
+    ]>
+<rdf:RDF xmlns:rdf="&rdf;#" xmlns:rdfs="&rdfs;#" xmlns="&rdfs;#" xml:base="&spo;">
+
+  <Class rdf:ID="Sport">
+    <label>sport</label>
+    <comment>Pratique méthodique de toute espèce d'exercices physiques</comment>
+  </Class>
+
+  <Class rdf:ID="MaterielSportif">
+    <label>materiel sportif</label>
+    <comment>Materiel utilisé pour pratiquer un sport</comment>
+  </Class>
+
+  <Class rdf:ID="Ballon">
+    <label>ballon</label>
+    <subClassOf rdf:resource="#MaterielSportif"/>
+  </Class>
+  
+  <rdf:Property rdf:ID="formeBallon">
+    <domain rdf:resource="#Ballon"/>
+  </rdf:Property>
+
+  <Class rdf:ID="Raquette">
+    <label>raquette</label>
+    <subClassOf rdf:resource="#MaterielSportif"/>
+  </Class>
+
+  <Class rdf:ID="Velo">
+    <label>vélo</label>
+    <subClassOf rdf:resource="#MaterielSportif"/>
+  </Class>
+
+  <Class rdf:ID="SportCo">
+    <label>sport collectif</label>
+    <comment>Sport qui oppose des équipes entre elles, et dont les titres sont attribués aux équipes</comment>
+    <subClassOf rdf:resource="#Sport"/>
+  </Class>
+
+  <Class rdf:ID="SportIndividuel">
+    <label>sport individuel</label>
+    <comment>Sport dont les titres sont attribués individuellement</comment>
+    <subClassOf rdf:resource="#Sport"/>
+  </Class>
+
+  <Class rdf:ID="SportBallon">
+    <label>sport de ballon</label>
+    <comment>Sport collectif qui utilise un ballon</comment>
+    <subClassOf rdf:resource="#SportCo"/>
+  </Class>
+
+  <Class rdf:ID="SportRaquette">
+    <label>sport de raquettes</label>
+    <subClassOf rdf:resource="#SportEquipe"/>
+    <subClassOf rdf:resource="#SportIndividuel"/>
+  </Class>
+
+  <Class rdf:ID="SportEquipe">
+    <label>sport d'équipe</label>
+    <comment>Sport qui se joue en équipe, mais dont les titres sont attribués individuellement</comment>
+    <subClassOf rdf:resource="#Sport"/>
+  </Class>
+  
+  <Class rdf:ID="Federation">
+    <label>Fédération</label>
+    <comment>Une fédération sportive est une association sportive ayant pour vocation la réunion d'autres associations de moindre taille, généralement des clubs sportifs individuels ou des ligues régionales.</comment>
+  </Class>
+  
+  <Class rdf:ID="Competition">
+    <label>compétition</label>
+    <comment>Compétition sportive</comment>
+  </Class>
+  
+  <Class rdf:ID="DescriptionMatch">
+    <label>match</label>
+    <comment>Décrit comment se rencontrent deux adversaires (équipes ou individus) dans un sport collectif ou individuel.</comment>
+  </Class>
+
+  <rdf:Property rdf:ID="nbJoueursParEquipe">
+    <domain rdf:resource="#SportCo"/>
+    <label>Nombre de joueurs par équipe</label>
+  </rdf:Property>
+
+  <rdf:Property rdf:ID="utiliseMateriel">
+    <domain rdf:resource="#Sport"/>
+    <range rdf:resource="#MaterielSportif"/>
+  </rdf:Property>
+  
+  <rdf:Property rdf:ID="aPourLieu">
+    <domain rdf:resource="#Sport"/>
+    <range rdf:resource="#LieuSport"/>
+    <label>lieu où se pratique le sport</label>
+  </rdf:Property>
+  
+  <Class rdf:ID="LieuSport">
+    <label>lieu de pratique d'un sport</label>
+  </Class>
+  
+  <rdf:Property rdf:ID="largeur">
+    <domain rdf:resource="#LieuSport"/>
+  </rdf:Property>
+  
+  <rdf:Property rdf:ID="dureeRencontre">
+    <domain rdf:resource="#DescriptionMatch"/>
+    <comment>La durée totale d'une rencontre,sans les prolongations, en minutes</comment>
+  </rdf:Property>
+  
+  <rdf:Property rdf:ID="longueur">
+    <domain rdf:resource="#LieuSport"/>
+  </rdf:Property>
+  
+  <rdf:Property rdf:ID="regie">
+    <domain rdf:resource="#Federation"/>
+    <range rdf:resource="#Sport"/>
+  </rdf:Property>
+  
+  <rdf:Property rdf:ID="match">
+    <domain rdf:resource="#Sport"/>
+    <range rdf:resource="#DescriptionMatch"/>
+  </rdf:Property>
+  
+  <rdf:Property rdf:ID="competition">
+    <domain rdf:resource="#Sport"/>
+    <range rdf:resource="#Competition"/>
+  </rdf:Property>
+</rdf:RDF>
+

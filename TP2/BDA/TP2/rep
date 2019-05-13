@@ -1,0 +1,68 @@
+use ly25u
+
+show collections
+
+1) db.ly25u.movies.insert({type:"test"})
+
+2) db.ly25u.movies.insert({titre:"Start Wars, episode 1 : La menace fantôme", realisateur:"Georges Lucas"})
+   
+3) mongoimport --host 127.0.0.1 --port 27017 --db ly25u --collection books --file /home/iamd/data/books.json
+
+use ly25u
+
+4) db.books.find({"author":"J. R. R. Tolkien"}).pretty()
+
+5) db.books.find({"format.paperback.shop": "Fnac", "format.paperback.price": {$lt:11}},{_id:0, "title":1})
+
+6) db.books.find({$or:[{"format.kindle.price": {$lt:06}},{"format.kindle": {$exists:false}}]}).pretty()
+
+7) db.books.find({"description":{$regex:"dwar",$options:"i"}}).pretty()
+  db.books.find({"description":{$regex:/dwar/,$options:"i"}}).pretty()
+ 
+8) db.books.update({"title":"The Hobbit; or, There and Back Again"},{$set:{"format.kindle.price":7.00,"personnages":["Gandalf","Bildon","Elrond"]}})
+
+9) db.books.update({"title":"Tolkien's World from A to Z: The Complete Guide to Middle-Earth"},{$push: {"format.paperback.shop":"Cultura"}})
+
+10) db.books.remove({$or:[{"editor": {$exists:true}},{"personnages": {$exists:true}}]})
+
+11) db.books.createIndex({"title":-1})
+12) db.books.drop()
+  db.books.aggregate({$match: {"format.kindle.price": {$exists:true}}},{$group:{_id:"$author",moyen: {$avg: "$format.kindle.price"}}})
+
+13)
+db.books.mapReduce(function ()
+  {for (var i = 0 ; i < this.format.paperback.shop.length ; i++)
+    { emit(this.format.paperback.shop[i],1);}},function (key,values) 
+    { return Array.sum(values);},
+    {query: {},out: "books_count_per_shop"});
+  
+  
+1) db.paris.find({"category": "accommodation"},{name:1,_id : 0}).pretty()
+2) db.paris.find({"contact.phone": {$exists: true}},{name: 1 , "contact.phone": 1, _id : 0}).pretty()
+3) db.paris.find({"contact.website": {$exists: true},"contact.Foursquare":{$exists: true}},{name: 1 , "contact": 1, _id : 0}).size()
+4) db.paris.find({"name":{$regex:/hotel/i}},{name: 1, _id : 0}).pretty()  /*attention a la case*/
+5) db.paris.find({"services":"chambres non-fumeurs"},{name: 1,services: 1, _id : 0}).pretty()
+6) db.paris.find({"services.0":"chambres non-fumeurs"},{name: 1,services:1, _id : 0}).pretty()
+7) db.paris.find({"services.0":"chambres non-fumeurs", "services": {$size:1}},{name: 1,services:1, _id : 0}).pretty()
+8) db.paris.find({"services": {$size:5}},{name: 1,services:1, _id : 0}).pretty()
+9) db.paris.find({"services.4": {$exists: true}},{name: 1 ,services:1, _id : 0}).pretty()
+10)db.paris.find({"category": "accommodation", "services": "blanchisserie"},{name:1,"location.adress":1,_id : 0}).pretty()
+11)db.paris.find({"reviews.rating": {$gt:4}},{name:1,"category":1,_id : 0}).pretty()
+12)db.paris.find({"reviews.source":"Facebook"},{name:1,"reviews.source":1,_id : 0}).pretty()
+13)db.paris.find({"$nor":[{"reviews.rating":{$lte:4}}],"reviews.rating":{$exist:true}},{name:1,"reviews.rating":1,_id : 0}).pretty()
+13bis) db.paris.find({reviews:{$not:{$size:0}}, $and:[{"reviews.rating":{$not:{$lt:4}}},{"reviews.rating":{$ne:""}}]},{name:1,_id:0}).pretty()
+14) db.paris.find({"reviews":{$elemMatch:{rating:{$gt:3},language:"en"}}},{name:1,"reviews.language":1,"reviews.rating":1,_id : 0}).pretty()
+15)db.paris.find({"location.address":{$regex: /rue de rome/i}},{name:1,"location.coord.coordinates":1,_id : 0}).pretty()
+
+
+1)db.paris.distinct("category")
+2) db.paris.distinct("services")
+3)db.paris.distinct("reviews.source")
+
+
+1 db.paris.aggregate([{$match:{"category":"accommodation","services":"blanchisserie","contact.phone":{$exists:true}}},{$project:{_id:0,"name":1}},{$sort:{"name":1}}])
+
+
+
+
+depot

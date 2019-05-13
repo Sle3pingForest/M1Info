@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE rdf:RDF [
+   <!ENTITY spo   "http://www.fil.univ-lille1.fr/~caronc/WS/schema"> 
+   <!ENTITY xsd      "http://www.w3.org/2001/XMLSchema#"> ]>
+ 
+<rdf:RDF  
+   xmlns:rdf ="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+   xmlns:xsd ="&xsd;" 
+   xmlns     ="&spo;#" 
+   xml:base  ="http://www.fil.univ-lille1.fr/~caronc/WS/data" >
+   
+   <SportBallon rdf:ID = "Football">
+     <rdfs:label xml:lang="fr">Football</rdfs:label>
+     <rdfs:label xml:lang="en">Soccer</rdfs:label>
+     <aPourLieu rdf:resource="#TerrainFoot"/>
+     <nbJoueursParEquipe>11</nbJoueursParEquipe>
+     <objectif>Mettre le ballon dans le but adverse, sans utiliser les bras. Le gardien de buts a pour objectif d'empêcher le ballon d'entrer dans ses buts et peut utiliser les mains.</objectif>
+     <utiliseMateriel rdf:resource="#BallonFoot"/>
+     <match>
+       <rdf:Description>
+         <rdf:type rdf:resource="#DescriptionMatch"/>
+         <rdfs:label>Match de football</rdfs:label>
+         <dureeRencontre>90</dureeRencontre>
+         <rdfs:comment>90 minutes (2 fois 45 minutes), avec éventuellement des prolongations (2 fois 15 minutes) suivies (ou pas) de tirs au but</rdfs:comment>
+       </rdf:Description>
+     </match>
+     <competition rdf:resource="#MondialFoot"/>
+     <competition rdf:resource="#CAN"/>
+   </SportBallon>
+   
+   <Federation rdf:ID = "FIFA">
+     <rdfs:label xml:lang="fr">Fédération Internationale de Football Association</rdfs:label>
+     <rdfs:comment>La FIFA est une association de Droit Suisse fondée en 1904 dont le siège se situe à Zurich.
+     209 associations nationales la composent. 
+     Son but, énoncé dans les statuts, est d'améliorer constamment le football à travers différentes actions.</rdfs:comment>
+     <regie rdf:resource="#Football"/>
+   </Federation>
+   
+   <Competition rdf:ID = "MondialFoot">
+     <rdfs:label xml:lang="fr">Coupe du monde de football</rdfs:label>
+     <rdfs:comment>La coupe du monde de football se déroule tous les 4 ans et réunit les meilleurs équipes 
+     nationales de tous les continents</rdfs:comment>
+   </Competition>
+   
+   <Competition rdf:ID = "CAN">
+     <rdfs:label xml:lang="fr">Coupe d'Afrique de Nations</rdfs:label>
+     <rdfs:comment>La Coupe d'Afrique des nations, couramment abrégée en CAN, est la plus importante compétition internationale 
+     de football en Afrique. Elle est organisée par la Confédération africaine de football (CAF) 
+     et met aux prises les sélections nationales africaines. Cette compétition est disputée tous les deux ans</rdfs:comment>
+   </Competition>
+   
+   <Ballon rdf:ID = "BallonFoot">
+     <rdfs:label>Ballon de football</rdfs:label>
+     <formeBallon>Sphérique</formeBallon>
+   </Ballon>
+   
+   <LieuSport rdf:ID = "TerrainFoot">
+     <rdfs:label>Terrain de football</rdfs:label>
+     <largeur>
+       <rdf:Description>
+         <min>40</min>
+         <max>90</max>
+       </rdf:Description>
+     </largeur>
+     <longueur>
+       <rdf:Description>
+         <min>90</min>
+         <max>120</max>
+       </rdf:Description>
+     </longueur>
+   </LieuSport>
+   
+   <SportBallon rdf:ID = "Basket">
+     <rdfs:label>Basketball</rdfs:label>
+     <aPourLieu rdf:resource="#TerrainBasket"/>
+     <nbJoueursParEquipe>5</nbJoueursParEquipe>
+     <utiliseMateriel rdf:resource="#BallonBasket"/>
+     <utiliseMateriel rdf:resource="#PanierBasket"/>
+     <objectif>Marquer des paniers</objectif>
+     <match>
+       <rdf:Description>
+         <rdfs:label>Match de Basket</rdfs:label>
+         <dureeRencontre>
+         <rdf:Alt>
+           <rdf:_1>40</rdf:_1>
+           <rdf:_2>48</rdf:_2>
+         </rdf:Alt>
+         </dureeRencontre>
+         <rdfs:comment>Un match de Basket est constitué de 4 périodes de 10 minutes (règle de la FIBA), ou de 4 périodes de 12 minutes (règle de la NBA)</rdfs:comment>
+       </rdf:Description>
+     </match>
+   </SportBallon>
+   
+   <Federation rdf:ID = "FIBA">
+     <rdfs:label xml:lang="fr">Fédération internationale de basket</rdfs:label>
+     <regie rdf:resource="#Basket"/>
+   </Federation>
+   
+   <Federation rdf:ID = "NBA">
+     <rdfs:label xml:lang="en">National Basketball Association</rdfs:label>
+     <regie rdf:resource="#Basket"/>
+   </Federation>
+   
+   <Ballon rdf:ID = "BallonBasket">
+     <rdfs:label>Ballon de basketball</rdfs:label>
+     <formeBallon>Sphérique</formeBallon>
+   </Ballon>
+   
+   <MaterielSportif rdf:ID = "PanierBasket">
+     <rdfs:label>Panier de basketball</rdfs:label>
+   </MaterielSportif>
+   
+   
+   <LieuSport rdf:ID = "TerrainBasket">
+     <rdfs:label>Terrain de basketball</rdfs:label>
+   </LieuSport>
+   
+   <SportRaquette rdf:ID = "Tennis">
+     <rdfs:label>Tennis</rdfs:label>
+     <objectif>Renvoyer la balle ... et faire en sorte que l'adversaire ne la renvoie pas</objectif>
+     <utiliseMateriel>
+       <Raquette>
+         <rdfs:label>Raquette de tennis</rdfs:label>
+       </Raquette>
+     </utiliseMateriel>
+   </SportRaquette>
+   
+   <SportIndividuel rdf:ID = "Course">
+     <rdfs:label>Course à pieds</rdfs:label>
+     <objectif>Courir le plus vite possible, sur une distance fixe</objectif>
+     <rdfs:comment>On distingue les courses sur une distance longue (fond), moyenne (demi-fond) ou courte (sprint)</rdfs:comment>
+   </SportIndividuel>
+</rdf:RDF>

@@ -1,0 +1,19 @@
+
+I
+Q3: db.paris.find({"contact.website": {$exists: true},"contact.Foursquare":{$exists: true}},{name: 1 , "contact": 1, _id : 0}).size()
+  2070
+Q7 
+db.paris.find({"services.0":"chambres non-fumeurs", "services": {$size:1}},{name: 1,services:1, _id : 0}).size()
+  15
+Q8
+db.paris.find({"services": {$size:5}},{name: 1,services:1, _id : 0}).size()
+  53
+Q15
+db.paris.find({"location.address":{$regex: /rue de rome/i}},{name:1,"location.coord.coordinates":1,_id : 0}).size()
+  50
+  
+II
+Q3
+db.paris.distinct("reviews.source")
+[ "Foursquare", "GooglePlaces", "Facebook" ]
+

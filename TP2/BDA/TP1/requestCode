@@ -1,0 +1,102 @@
+LOAD CSV WITH HEADERS FROM "file:/airports.csv"as ligne
+CREATE (aero:Airport{id:toInteger(ligne.AirportID),name:ligne.Name, city:ligne.City,country:ligne.Country, IATA:ligne.IATA, latitude:toFloat(ligne.Latitude),longitude: toFloat(ligne.Longitude), altitude: toFloat(ligne.Altitude), TimeZone:ligne.TZ});
+
+
+LOAD CSV WITH HEADERS FROM "file:/airlines.csv"as ligne
+CREATE (airl:Airline{id:toInteger(ligne.AirlineID), name:ligne.Name, alias:ligne.Alias, IATA:ligne.IATA,country:ligne.Country, active:ligne.Active});
+
+
+CREATE INDEX ON :Airport(id);
+CREATE INDEX ON :Airline(id);
+CREATE INDEX ON :Route(id);
+CREATE INDEX ON :Airport(country);
+CREATE INDEX ON :Airport(city);
+CREATE INDEX ON :Airport(IATA);
+CREATE INDEX ON :Route(name);
+
+USING PERIODIC COMMIT 200 LOAD CSV WITH HEADERS FROM "file:/routes-clean.csv"as ligne 
+MERGE (airline:Airline{id:toInteger(ligne.AirlineID)} ) 
+MERGE (source:Airport{id:toInteger(ligne.SourceAirportID)} )
+MERGE (dest:Airport{id:toInteger(ligne.DestAirportID)} )
+CREATE (route:Route{equipment:ligne.Equipment})
+CREATE (route)-[:from]->(source)CREATE (route)-[:to]->(dest)
+CREATE (route)-[:by]->(airline)
+
+2.1.1
+MATCH(airportFr:Airport)
+WHERE(airportFr.country = 'France')
+RETURN airportFr.name, airportFr.IATA;
+
+2.1.2
+MATCH(comp:Airline)
+WHERE(comp.country ='France' AND comp.active = 'Y' AND exists(comp.IATA))
+RETURN comp.name, comp.IATA
+
+2.1.3
+
+MATCH(comp2:Route) -[:by]-> (a:Airline) 
+WHERE(a.country = 'France')
+RETURN DISTINCT a.name
+
+2.1.4
+
+MATCH g =  (route:Route) -[:from]-> (ap:Airport)
+WHERE (ap.IATA = 'CDG')
+RETURN g
+
+2.1.5
+
+MATCH g =  (route:Route) -[:from]-> (ap:Airport)
+WHERE (ap.IATA = 'CDG' AND route.equipment ='380')
+RETURN g
+
+2.1.6
+
+MATCH (route:Route) -[:from]-> (dep:Airport) , (route:Route) -[:to]-> (dest:Airport) 
+WHERE (dep.IATA = 'CDG' AND route.equipment ='380')
+RETURN dest.country, dest.city
+
+2.1.7
+MATCH (route:Route) -[:from]-> (dep:Airport),
+    (route:Route) -[:to]-> (dest:Airport),
+    (route:Route) -[:by]-> (assurer:Airline) 
+WHERE (dep.IATA = 'CDG' AND route.equipment ='380')
+RETURN dest.country, dest.city, assurer.name 
+
+2.1.8
+
+MATCH g = (route:Route) -> (depFr:Airport),(route) -> (destFr:Airport)
+WHERE depFr.IATA ='CDG' AND destFr.country = 'France'
+return g
+
+MATCH g = (destFr:Airport) <-:to]- (route:Route)  -[:from]-> (depFr:Airport)
+WHERE depFr.IATA ='CDG' AND destFr.country = 'France'
+return g
+
+2.1.9
+
+MATCH g = (route:Route) -[:from]-> (dep380:Airport),(route) -[:to]-> (dest380:Airport)
+WHERE route.equipment ='380'
+return g
+
+2.1.10
+
+MATCH g = (route:Route) -[:from]-> (depFr:Airport),(route) -[:to]-> (destUK:Airport)
+WHERE depFr.country='France' AND destUK.country ='United Kingdom'
+return g
+
+2.1.11
+MATCH (route:Route) -[:from]-> (depFr:Airport),(route) -[:to]-> (destUK:Airport), (route:Route) -[:by]-> (assurer:Airline) 
+WHERE depFr.country='France' AND destUK.country ='United Kingdom'
+RETURN DISTINCT assurer.name
+
+2.1.12
+MATCH (route:Route) -[:from]-> (depFr:Airport),(route) -[:to]-> (destUK:Airport), (route:Route) -[:by]-> (assurer:Airline) 
+WHERE depFr.country='France' AND destUK.country ='United Kingdom' AND route.equipment ='320'
+RETURN DISTINCT assurer.name
+
+2.2.1
+MATCH (FROM:Airport)<-[:from]-(r:Route)-[:to]->(TO:Airport),(r)-[:by]-> (comp)
+WHERE FROM <> TO 
+MERGE (FROM)-[:path{airline:comp.name}]->(TO);
+CREATE INDEX ON :path(airline);

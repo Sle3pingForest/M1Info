@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE rdf:RDF [
+   <!ENTITY humans   "http://www.inria.fr/2007/09/11/humans.rdfs"> 
+   <!ENTITY xsd      "http://www.w3.org/2001/XMLSchema#"> 
+   <!ENTITY sport    "http://www.fil.univ-lille1.fr/~caronc/WS/schema">
+   <!ENTITY sport-inst    "http://www.fil.univ-lille1.fr/~caronc/WS/data">]>
+ 
+<rdf:RDF  
+   xmlns:rdf ="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+   xmlns:sport = "&sport;#"
+   >
+
+<!-- On ajoute quelques informations sur les sports pratiqués par les personnes -->
+
+<rdf:Description rdf:about = "&humans;-instances#Harry">
+  <sport:pratique rdf:resource = "&sport-inst;#Football"/>
+  <sport:pratique rdf:resource = "&sport-inst;#Tennis"/>
+</rdf:Description>
+
+<rdf:Description rdf:about = "&humans;-instances#Catherine">
+  <sport:pratique rdf:resource = "&sport-inst;#Football"/>
+  <sport:pratique rdf:resource = "&sport-inst;#Basket"/>
+</rdf:Description>
+
+<rdf:Description rdf:about = "&humans;-instances#Laura">
+  <sport:pratique rdf:resource = "&sport-inst;#Basket"/>
+</rdf:Description>
+  
+</rdf:RDF>

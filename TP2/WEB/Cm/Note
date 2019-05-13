@@ -1,8 +1,8 @@
-- JDK
+- JDK 8
 - Eclipse
 - MySQL
   Community Server
   Workbrench
   Connector
--Wildfly 
+-Wildfly (10)
   Application server
